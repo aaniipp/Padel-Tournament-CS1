@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
     // Get file path
     let filePath = '.' + req.url;
     if (filePath === './') {
-        filePath = './padel-tournament.html';
+        filePath = './index.html';
     }
 
     // Get file extension
@@ -72,14 +72,14 @@ server.listen(PORT, () => {
     console.log('='.repeat(60));
     console.log('\n🚀 Server started successfully!');
     console.log('\n📍 Local Access:');
-    console.log(`   http://localhost:${PORT}/padel-tournament.html`);
-    console.log(`   http://127.0.0.1:${PORT}/padel-tournament.html`);
+    console.log(`   http://localhost:${PORT}/index.html`);
+    console.log(`   http://127.0.0.1:${PORT}/index.html`);
     
     console.log('\n📱 Network Access (for devices on same network):');
     for (const name of Object.keys(networkInterfaces)) {
         for (const iface of networkInterfaces[name]) {
             if (iface.family === 'IPv4' && !iface.internal) {
-                console.log(`   http://${iface.address}:${PORT}/padel-tournament.html`);
+                console.log(`   http://${iface.address}:${PORT}/index.html`);
             }
         }
     }
@@ -92,7 +92,7 @@ server.listen(PORT, () => {
     console.log('='.repeat(60) + '\n');
 
     // Open browser automatically
-    const url = `http://localhost:${PORT}/padel-tournament.html`;
+    const url = `http://localhost:${PORT}/index.html`;
     const start = process.platform === 'darwin' ? 'open' : process.platform === 'win32' ? 'start' : 'xdg-open';
     exec(`${start} ${url}`, (err) => {
         if (err) console.log('Could not open browser automatically');

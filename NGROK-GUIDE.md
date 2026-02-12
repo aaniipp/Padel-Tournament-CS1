@@ -84,7 +84,7 @@ Your server should show:
 ```
 🚀 Server started successfully!
 📍 Local Access:
-   http://localhost:8000/padel-tournament.html
+   http://localhost:8000/index.html
 ```
 
 ### Step 5: Start ngrok
@@ -117,9 +117,9 @@ Copy the HTTPS forwarding URL from ngrok output:
 https://xxxx-xxxx-xxxx.ngrok-free.app
 ```
 
-Share this URL with anyone! They can access your Padel Tournament app by adding `/padel-tournament.html` to the end:
+Share this URL with anyone! They can access your Padel Tournament app by adding `/index.html` to the end:
 ```
-https://xxxx-xxxx-xxxx.ngrok-free.app/padel-tournament.html
+https://xxxx-xxxx-xxxx.ngrok-free.app/index.html
 ```
 
 ## Quick Start Commands
@@ -229,7 +229,7 @@ ngrok start --all
 1. ✅ Start local server (Node.js or Python)
 2. ✅ Start ngrok in new terminal: `ngrok http 8000`
 3. ✅ Copy HTTPS URL from ngrok output
-4. ✅ Share URL with `/padel-tournament.html` appended
+4. ✅ Share URL with `/index.html` appended
 5. ✅ Keep both terminals running
 
 Your Padel Tournament app is now accessible from anywhere! 🎉

@@ -36,13 +36,13 @@ def start_server():
         print(f"{'='*60}")
         print(f"\n🚀 Server started successfully!")
         print(f"\n📍 Local Access:")
-        print(f"   http://localhost:{PORT}/padel-tournament.html")
-        print(f"   http://127.0.0.1:{PORT}/padel-tournament.html")
+        print(f"   http://localhost:{PORT}/index.html")
+        print(f"   http://127.0.0.1:{PORT}/index.html")
         print(f"\n📱 Network Access (for devices on same network):")
         import socket
         hostname = socket.gethostname()
         local_ip = socket.gethostbyname(hostname)
-        print(f"   http://{local_ip}:{PORT}/padel-tournament.html")
+        print(f"   http://{local_ip}:{PORT}/index.html")
         print(f"\n🌐 For ngrok access:")
         print(f"   1. Download ngrok from: https://ngrok.com/download")
         print(f"   2. Run: ngrok http {PORT}")
@@ -51,7 +51,7 @@ def start_server():
         print(f"{'='*60}\n")
         
         # Open browser automatically
-        webbrowser.open(f'http://localhost:{PORT}/padel-tournament.html')
+        webbrowser.open(f'http://localhost:{PORT}/index.html')
         
         try:
             httpd.serve_forever()

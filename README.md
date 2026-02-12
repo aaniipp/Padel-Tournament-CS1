@@ -11,11 +11,15 @@ A web-based Padel tournament scoring application with support for two game modes
 - **Mobile Responsive**: Works on all devices
 - **Data Persistence**: All data saved to localStorage
 - **Color-coded Rankings**: Gold, Silver, Bronze, and Gray for top 4 positions
+- **Large Tap Targets**: Optimized for touch devices with easy-to-press buttons
+- **Undo Functionality**: Quickly undo last scoring action to prevent errors
+- **Real-time Visual Feedback**: Animations and toasts for immediate confirmation
+- **Confirmation Modals**: Prevents accidental match finishing or tournament reset
 
 ## Quick Start
 
 ### Option 1: Direct File Access (Simple)
-Simply open `padel-tournament.html` in your web browser (Chrome, Safari, Firefox, etc.)
+Simply open `index.html` in your web browser (Chrome, Safari, Firefox, etc.)
 
 ### Option 2: Local Server (Recommended for ngrok)
 
@@ -58,10 +62,17 @@ Share this URL with anyone to give them access to your Padel Tournament app!
 
 ### Playing Matches
 1. Select a game mode (Americano or Tennis)
-2. Add points using the "+ Point" buttons
+2. Add points using the large "+ Point" buttons
 3. Remove points using the "- Point" buttons if needed
-4. Click "Finish Match" when the match is complete
-5. The round will automatically advance
+4. Use the "Undo Last Action" button at the bottom to quickly correct mistakes
+5. Click "Finish Match" when the match is complete (requires confirmation)
+6. The round will automatically advance
+
+### Undo Functionality
+- The "Undo Last Action" button appears at the bottom of the screen after any scoring action
+- Click it to revert the last point addition or subtraction
+- Action history stores up to 10 actions for undo
+- History is automatically cleared when switching game modes or finishing a match
 
 ### Viewing Rankings
 1. Click the "Ranking" tab
@@ -132,8 +143,10 @@ Data persists across browser sessions and device refreshes.
 - **Frontend**: Pure HTML, CSS, JavaScript
 - **Backend**: Python HTTP Server (for local hosting)
 - **Data Storage**: Browser localStorage
-- **Responsive Design**: Mobile-friendly interface
+- **Responsive Design**: Mobile-friendly interface with large touch targets
 - **Cross-browser**: Works on Chrome, Safari, Firefox, Edge
+- **Accessibility**: WCAG 2.1 compliant with ARIA labels
+- **Touch-Optimized**: Haptic feedback support on compatible devices
 
 ## License
 

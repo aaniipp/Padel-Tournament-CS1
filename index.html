@@ -2,167 +2,907 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <title>Padel Tournament Ultimate</title>
 
 <style>
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body{
     margin:0;
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
     background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);
     color:white;
     text-align:center;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
 }
 
 .container{
     max-width:700px;
     margin:auto;
     padding:20px;
-    padding-bottom:80px;
+    padding-bottom:120px;
 }
 
+/* ===== TABS ===== */
 .tabs{
     display:flex;
     justify-content:center;
-    gap:10px;
-    margin-bottom:15px;
+    gap:12px;
+    margin-bottom:20px;
 }
 
 .tab-btn{
-    padding:8px 16px;
+    padding:14px 24px;
     border:none;
-    border-radius:12px;
+    border-radius:16px;
     cursor:pointer;
-    background:#444;
+    background:rgba(255,255,255,0.15);
     color:white;
+    font-size:16px;
+    font-weight:600;
+    transition:all 0.3s ease;
+    min-height:52px;
+    min-width:100px;
+}
+
+.tab-btn:active{
+    transform:scale(0.95);
 }
 
 .active-tab{
-    background:#00e676;
+    background:linear-gradient(135deg,#00e676,#00c853);
     color:black;
+    box-shadow:0 4px 15px rgba(0,230,118,0.4);
 }
 
-.teams{
+/* ===== MODE BUTTONS ===== */
+.mode-buttons{
     display:flex;
     gap:15px;
-    margin-top:20px;
+    justify-content:center;
+    margin-bottom:20px;
+}
+
+.mode-btn{
+    flex:1;
+    padding:18px 20px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:700;
+    transition:all 0.3s ease;
+    min-height:64px;
+}
+
+.americano-btn{
+    background:rgba(255,152,0,0.2);
+    color:#ff9800;
+    border:2px solid #ff9800;
+}
+
+.tennis-btn{
+    background:rgba(156,39,176,0.2);
+    color:#9c27b0;
+    border:2px solid #9c27b0;
+}
+
+.americano-btn.active{
+    background:linear-gradient(135deg,#ff9800,#ffa726);
+    color:white;
+    box-shadow:0 6px 20px rgba(255,152,0,0.5);
+    transform:scale(1.02);
+}
+
+.tennis-btn.active{
+    background:linear-gradient(135deg,#9c27b0,#ab47bc);
+    color:white;
+    box-shadow:0 6px 20px rgba(156,39,176,0.5);
+    transform:scale(1.02);
+}
+
+.mode-btn:active{
+    transform:scale(0.97);
+}
+
+/* ===== ROUND & MODE LABEL ===== */
+.round-label{
+    font-size:18px;
+    font-weight:600;
+    margin:15px 0 5px 0;
+    color:#00e676;
+}
+
+.mode-label{
+    font-size:14px;
+    opacity:0.8;
+    margin-bottom:20px;
+}
+
+/* ===== TEAMS ===== */
+.teams{
+    display:flex;
+    gap:20px;
+    margin-top:25px;
 }
 
 .team{
     flex:1;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(10px);
-    border-radius:20px;
-    padding:15px;
-}
-
-.score{
-    font-size:50px;
-    font-weight:700;
-    margin:10px 0;
-}
-
-.games{
-    font-size:14px;
-    opacity:0.7;
-}
-
-button{
-    padding:8px 14px;
-    border:none;
-    border-radius:10px;
-    margin:4px;
-    cursor:pointer;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(15px);
+    border-radius:24px;
+    padding:20px 15px;
+    border:2px solid rgba(255,255,255,0.1);
     transition:all 0.3s ease;
 }
 
-.green{background:#00e676;color:#000;}
-.red{background:#ff5252;color:white;}
-.blue{background:#448aff;color:white;}
-.gray{background:rgba(255,255,255,0.15);color:white;}
-.americano-btn{background:#ff9800;color:#000;font-weight:600;padding:10px 20px;font-size:15px;}
-.tennis-btn{background:#9c27b0;color:#fff;font-weight:600;padding:10px 20px;font-size:15px;}
-.americano-btn:hover{background:#ffa726;transform:scale(1.05);}
-.tennis-btn:hover{background:#ab47bc;transform:scale(1.05);}
-.americano-btn.active{background:#ffc107;color:#000;box-shadow:0 0 15px rgba(255,193,7,0.5);transform:scale(1.05);}
-.tennis-btn.active{background:#e91e63;color:#fff;box-shadow:0 0 15px rgba(233,30,99,0.5);transform:scale(1.05);}
+.team-name{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:15px;
+    min-height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
 
+.score-display{
+    font-size:72px;
+    font-weight:800;
+    margin:15px 0;
+    line-height:1;
+    transition:all 0.3s ease;
+    text-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+
+.score-display.pulse{
+    animation:scorePulse 0.4s ease;
+}
+
+@keyframes scorePulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.15);}
+}
+
+.games-display{
+    font-size:16px;
+    opacity:0.8;
+    margin-bottom:20px;
+    min-height:24px;
+}
+
+/* ===== LARGE TAP TARGETS ===== */
+.score-controls{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.score-btn{
+    padding:18px 28px;
+    border:none;
+    border-radius:18px;
+    cursor:pointer;
+    font-size:20px;
+    font-weight:700;
+    transition:all 0.2s ease;
+    min-width:100px;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.score-btn:active{
+    transform:scale(0.92);
+}
+
+.score-btn.add{
+    background:linear-gradient(135deg,#00e676,#00c853);
+    color:black;
+    box-shadow:0 4px 15px rgba(0,230,118,0.4);
+}
+
+.score-btn.subtract{
+    background:linear-gradient(135deg,#ff5252,#ff1744);
+    color:white;
+    box-shadow:0 4px 15px rgba(255,82,82,0.4);
+}
+
+.score-btn:disabled{
+    opacity:0.3;
+    cursor:not-allowed;
+    transform:none;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.action-buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    margin-top:30px;
+    flex-wrap:wrap;
+}
+
+.action-btn{
+    padding:16px 28px;
+    border:none;
+    border-radius:16px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:all 0.3s ease;
+    min-height:56px;
+    min-width:120px;
+}
+
+.action-btn:active{
+    transform:scale(0.95);
+}
+
+.finish-btn{
+    background:linear-gradient(135deg,#00e676,#00c853);
+    color:black;
+    box-shadow:0 4px 15px rgba(0,230,118,0.4);
+}
+
+.standings-btn{
+    background:rgba(255,255,255,0.15);
+    color:white;
+    border:2px solid rgba(255,255,255,0.3);
+}
+
+.reset-btn{
+    background:rgba(255,82,82,0.2);
+    color:#ff5252;
+    border:2px solid #ff5252;
+}
+
+/* ===== UNDO BUTTON ===== */
+.undo-container{
+    position:fixed;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:1000;
+    display:none;
+    padding:0 10px;
+    width:100%;
+    max-width:400px;
+}
+
+.undo-btn{
+    padding:16px 32px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(135deg,#ff9800,#ffa726);
+    color:black;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 6px 25px rgba(255,152,0,0.5);
+    min-height:60px;
+    min-width:180px;
+    max-width:100%;
+    transition:all 0.3s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    white-space:nowrap;
+    margin:0 auto;
+}
+
+.undo-btn:active{
+    transform:scale(0.95);
+}
+
+.undo-btn.visible{
+    display:flex;
+    animation:slideUp 0.3s ease;
+}
+
+@keyframes slideUp{
+    from{opacity:0;transform:translateX(-50%) translateY(20px);}
+    to{opacity:1;transform:translateX(-50%) translateY(0);}
+}
+
+/* ===== CONFIRMATION MODAL ===== */
+.modal-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background:rgba(0,0,0,0.8);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    padding:20px;
+}
+
+.modal-overlay.visible{
+    display:flex;
+    animation:fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+.modal-content{
+    background:linear-gradient(180deg,#1a2a3a,#2a3a4a);
+    border-radius:24px;
+    padding:30px;
+    max-width:400px;
+    width:100%;
+    border:2px solid rgba(255,255,255,0.1);
+    animation:modalSlide 0.3s ease;
+}
+
+@keyframes modalSlide{
+    from{opacity:0;transform:scale(0.9) translateY(20px);}
+    to{opacity:1;transform:scale(1) translateY(0);}
+}
+
+.modal-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:15px;
+    color:#ff5252;
+}
+
+.modal-message{
+    font-size:16px;
+    margin-bottom:25px;
+    opacity:0.9;
+    line-height:1.5;
+}
+
+.modal-buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+}
+
+.modal-btn{
+    padding:16px 32px;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    min-height:56px;
+    min-width:120px;
+    transition:all 0.2s ease;
+}
+
+.modal-btn:active{
+    transform:scale(0.95);
+}
+
+.modal-confirm{
+    background:linear-gradient(135deg,#ff5252,#ff1744);
+    color:white;
+}
+
+.modal-cancel{
+    background:rgba(255,255,255,0.15);
+    color:white;
+}
+
+/* ===== RANKING TABLE ===== */
 table{
     width:100%;
     margin-top:20px;
     border-collapse:collapse;
+    background:rgba(255,255,255,0.05);
+    border-radius:16px;
+    overflow:hidden;
 }
 
 th, td{
-    padding:8px;
-    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding:14px 10px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    text-align:center;
 }
 
-.gold{color:#ffd700;font-weight:700;}
+th{
+    background:rgba(255,255,255,0.1);
+    font-weight:700;
+    font-size:14px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+tr:last-child td{
+    border-bottom:none;
+}
+
+.gold{color:#ffd700;font-weight:700;text-shadow:0 0 10px rgba(255,215,0,0.5);}
 .silver{color:#c0c0c0;font-weight:700;}
 .bronze{color:#cd7f32;font-weight:700;}
 .fourth{color:#a0a0a0;font-weight:700;}
 
-/* Mobile Responsive */
+/* ===== VISUAL FEEDBACK ===== */
+.feedback-toast{
+    position:fixed;
+    top:100px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,230,118,0.95);
+    color:black;
+    padding:16px 32px;
+    border-radius:50px;
+    font-weight:700;
+    font-size:18px;
+    z-index:3000;
+    box-shadow:0 6px 25px rgba(0,230,118,0.5);
+    display:none;
+    animation:toastSlide 0.3s ease;
+}
+
+@keyframes toastSlide{
+    from{opacity:0;transform:translateX(-50%) translateY(-20px);}
+    to{opacity:1;transform:translateX(-50%) translateY(0);}
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 600px){
     .container{
-        padding:15px;
-        padding-bottom:100px;
+        padding:12px;
+        padding-bottom:160px;
     }
 
     h1{
         font-size:24px;
+        margin-bottom:10px;
+    }
+
+    .tabs{
+        gap:8px;
+        margin-bottom:15px;
     }
 
     .tab-btn{
-        padding:10px 12px;
-        font-size:14px;
+        padding:12px 14px;
+        font-size:13px;
+        min-height:48px;
+        min-width:70px;
+        border-radius:12px;
     }
 
-    .americano-btn, .tennis-btn{
-        padding:12px 16px;
-        font-size:14px;
-        width:48%;
+    .mode-buttons{
+        gap:10px;
+        margin-bottom:15px;
+    }
+
+    .mode-btn{
+        padding:14px 12px;
+        font-size:13px;
+        min-height:60px;
+        border-radius:16px;
+    }
+
+    .mode-btn small{
+        font-size:11px;
+    }
+
+    .round-label{
+        font-size:16px;
+        margin:10px 0 3px 0;
+    }
+
+    .mode-label{
+        font-size:12px;
+        margin-bottom:15px;
     }
 
     .teams{
         flex-direction:column;
-        gap:10px;
+        gap:12px;
     }
 
-    .score{
-        font-size:40px;
+    .team{
+        padding:15px 12px;
+        border-radius:18px;
     }
 
-    button{
-        padding:12px 16px;
+    .team-name{
+        font-size:15px;
+        min-height:40px;
+    }
+
+    .score-display{
+        font-size:56px;
+        margin:12px 0;
+    }
+
+    .games-display{
+        font-size:14px;
+        margin-bottom:15px;
+    }
+
+    .score-controls{
+        gap:8px;
+    }
+
+    .score-btn{
+        padding:14px 20px;
         font-size:16px;
-        margin:3px;
+        min-width:85px;
+        min-height:58px;
+        border-radius:14px;
+    }
+
+    .action-buttons{
+        gap:10px;
+        margin-top:20px;
+    }
+
+    .action-btn{
+        padding:12px 16px;
+        font-size:13px;
+        min-height:50px;
+        min-width:90px;
+        border-radius:14px;
     }
 
     table{
-        font-size:12px;
+        font-size:11px;
+        margin-top:15px;
     }
 
     th, td{
-        padding:6px 4px;
+        padding:8px 4px;
     }
 
-    .games{
+    th{
+        font-size:10px;
+    }
+
+    .modal-content{
+        padding:18px;
+        margin:10px;
+        border-radius:18px;
+    }
+
+    .modal-title{
+        font-size:18px;
+        margin-bottom:12px;
+    }
+
+    .modal-message{
+        font-size:13px;
+        margin-bottom:20px;
+    }
+
+    .modal-buttons{
+        gap:10px;
+    }
+
+    .modal-btn{
+        padding:14px 24px;
+        font-size:14px;
+        min-height:52px;
+        min-width:100px;
+        border-radius:12px;
+    }
+
+    .feedback-toast{
+        font-size:16px;
+        padding:14px 24px;
+        top:80px;
+    }
+
+    .undo-container{
+        bottom:20px;
+        padding:0 15px;
+    }
+
+    .undo-btn{
+        padding:14px 28px;
+        font-size:15px;
+        min-height:56px;
+        min-width:160px;
+    }
+}
+
+/* ===== SMALL MOBILE (iPhone SE, etc.) ===== */
+@media (max-width: 375px){
+    .container{
+        padding:10px;
+        padding-bottom:150px;
+    }
+
+    h1{
+        font-size:20px;
+    }
+
+    .tab-btn{
+        padding:10px 12px;
+        font-size:12px;
+        min-height:44px;
+        min-width:60px;
+    }
+
+    .mode-btn{
+        padding:12px 10px;
+        font-size:12px;
+        min-height:56px;
+    }
+
+    .mode-btn small{
+        font-size:10px;
+    }
+
+    .score-display{
+        font-size:48px;
+    }
+
+    .score-btn{
+        padding:12px 16px;
+        font-size:15px;
+        min-width:75px;
+        min-height:54px;
+    }
+
+    .action-btn{
+        padding:10px 14px;
+        font-size:12px;
+        min-height:48px;
+        min-width:80px;
+    }
+
+    table{
+        font-size:10px;
+    }
+
+    th, td{
+        padding:6px 3px;
+    }
+
+    .undo-container{
+        bottom:15px;
+        padding:0 10px;
+    }
+
+    .undo-btn{
+        padding:12px 24px;
+        font-size:14px;
+        min-height:52px;
+        min-width:140px;
+    }
+
+    .feedback-toast{
+        font-size:14px;
+        padding:12px 20px;
+        top:70px;
+    }
+}
+
+/* ===== SMALL MOBILE (iPhone SE, etc.) ===== */
+@media (max-width: 375px){
+    .container{
+        padding:10px;
+        padding-bottom:150px;
+    }
+
+    h1{
+        font-size:20px;
+    }
+
+    .tab-btn{
+        padding:10px 12px;
+        font-size:12px;
+        min-height:44px;
+        min-width:60px;
+    }
+
+    .mode-btn{
+        padding:12px 10px;
+        font-size:12px;
+        min-height:56px;
+    }
+
+    .mode-btn small{
+        font-size:10px;
+    }
+
+    .score-display{
+        font-size:48px;
+    }
+
+    .score-btn{
+        padding:12px 16px;
+        font-size:15px;
+        min-width:75px;
+        min-height:54px;
+    }
+
+    .action-btn{
+        padding:10px 14px;
+        font-size:12px;
+        min-height:48px;
+        min-width:80px;
+    }
+
+    table{
+        font-size:10px;
+    }
+
+    th, td{
+        padding:6px 3px;
+    }
+}
+
+/* ===== TOUCH OPTIMIZATION ===== */
+@media (hover: none) and (pointer: coarse){
+    .score-btn, .action-btn, .mode-btn, .tab-btn, .undo-btn, .modal-btn{
+        min-height:56px;
+        min-width:56px;
+        touch-action: manipulation;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .score-btn{
+        min-height:68px;
+        min-width:110px;
+    }
+
+    .undo-btn{
+        min-height:72px;
+    }
+
+    * {
+        -webkit-tap-highlight-color: rgba(0, 230, 118, 0.3);
+    }
+}
+
+/* ===== LANDSCAPE MOBILE ===== */
+@media (max-width: 900px) and (max-height: 500px) and (orientation: landscape){
+    .container{
+        padding:8px;
+        padding-bottom:100px;
+    }
+
+    h1{
+        font-size:18px;
+        margin-bottom:5px;
+    }
+
+    .tabs{
+        margin-bottom:8px;
+    }
+
+    .tab-btn{
+        padding:8px 12px;
+        font-size:12px;
+        min-height:40px;
+    }
+
+    .mode-buttons{
+        margin-bottom:8px;
+    }
+
+    .mode-btn{
+        padding:10px 12px;
+        font-size:12px;
+        min-height:48px;
+    }
+
+    .mode-btn small{
+        display:none;
+    }
+
+    .round-label{
+        font-size:14px;
+        margin:5px 0;
+    }
+
+    .mode-label{
+        font-size:11px;
+        margin-bottom:8px;
+    }
+
+    .teams{
+        gap:10px;
+    }
+
+    .team{
+        padding:10px 8px;
+    }
+
+    .team-name{
+        font-size:13px;
+        min-height:30px;
+    }
+
+    .score-display{
+        font-size:36px;
+        margin:8px 0;
+    }
+
+    .games-display{
+        font-size:12px;
+        margin-bottom:8px;
+    }
+
+    .score-btn{
+        padding:10px 16px;
+        font-size:14px;
+        min-width:70px;
+        min-height:44px;
+    }
+
+    .action-buttons{
+        margin-top:10px;
+    }
+
+    .action-btn{
+        padding:8px 12px;
+        font-size:11px;
+        min-height:40px;
+        min-width:70px;
+    }
+
+    .undo-container{
+        bottom:10px;
+        padding:0 10px;
+    }
+
+    .undo-btn{
+        padding:10px 20px;
+        font-size:13px;
+        min-height:44px;
+        min-width:140px;
+    }
+
+    .modal-content{
+        padding:15px;
+        max-width:350px;
+    }
+
+    .modal-title{
+        font-size:16px;
+    }
+
+    .modal-message{
         font-size:12px;
     }
 }
 
-/* Touch-friendly buttons */
-@media (hover: none) and (pointer: coarse){
-    button{
-        min-height:44px;
-        min-width:44px;
-    }
+/* ===== ACCESSIBILITY ===== */
+button:focus{
+    outline:3px solid #00e676;
+    outline-offset:2px;
+}
 
-    .americano-btn, .tennis-btn{
-        min-height:50px;
-    }
+button:focus:not(:focus-visible){
+    outline:none;
+}
+
+button:focus-visible{
+    outline:3px solid #00e676;
+    outline-offset:2px;
 }
 </style>
 </head>
@@ -171,7 +911,7 @@ th, td{
 
 <div class="container">
 
-<h1>PADEL TOURNAMENT</h1>
+<h1>🏆 PADEL TOURNAMENT</h1>
 
 <div class="tabs">
     <button id="tabMatch" class="tab-btn active-tab" onclick="showTab('match')">Match</button>
@@ -181,41 +921,54 @@ th, td{
 
 <div id="matchTab">
 
-<div>
-    <button id="btnAmericano" class="americano-btn active" onclick="setMode('americano')">🏆 Americano (Points)</button>
-    <button id="btnTennis" class="tennis-btn" onclick="setMode('tennis')">🎾 Tennis (Games)</button>
+<div class="mode-buttons">
+    <button id="btnAmericano" class="mode-btn americano-btn active" onclick="setMode('americano')">🏆 Americano<br><small>Points System</small></button>
+    <button id="btnTennis" class="mode-btn tennis-btn" onclick="setMode('tennis')">🎾 Tennis<br><small>Games System</small></button>
 </div>
 
-<h3 id="roundLabel"></h3>
-<h4 id="modeLabel">Mode: Americano (Total 21)</h4>
+<h3 id="roundLabel" class="round-label"></h3>
+<h4 id="modeLabel" class="mode-label"></h4>
 
 <div class="teams">
     <div class="team">
-        <h3 id="teamAName"></h3>
-        <div class="score" id="scoreA">0</div>
-        <div class="games" id="gamesA"></div>
-        <button class="green" onclick="addPoint('A')">+ Point</button>
-        <button class="red" onclick="minusPoint('A')">- Point</button>
+        <h3 id="teamAName" class="team-name"></h3>
+        <div class="score-display" id="scoreA">0</div>
+        <div class="games-display" id="gamesA"></div>
+        <div class="score-controls">
+            <button class="score-btn add" onclick="addPoint('A')" aria-label="Add point to Team A">
+                <span>➕</span> Point
+            </button>
+            <button class="score-btn subtract" onclick="minusPoint('A')" aria-label="Subtract point from Team A">
+                <span>➖</span> Point
+            </button>
+        </div>
     </div>
 
     <div class="team">
-        <h3 id="teamBName"></h3>
-        <div class="score" id="scoreB">0</div>
-        <div class="games" id="gamesB"></div>
-        <button class="green" onclick="addPoint('B')">+ Point</button>
-        <button class="red" onclick="minusPoint('B')">- Point</button>
+        <h3 id="teamBName" class="team-name"></h3>
+        <div class="score-display" id="scoreB">0</div>
+        <div class="games-display" id="gamesB"></div>
+        <div class="score-controls">
+            <button class="score-btn add" onclick="addPoint('B')" aria-label="Add point to Team B">
+                <span>➕</span> Point
+            </button>
+            <button class="score-btn subtract" onclick="minusPoint('B')" aria-label="Subtract point from Team B">
+                <span>➖</span> Point
+            </button>
+        </div>
     </div>
 </div>
 
-<br>
-<button class="green" onclick="finishMatch()">Finish Match</button>
-<button class="gray" onclick="finishTournament()">View Standings</button>
-<button class="red" onclick="resetTournament()">Reset Tournament</button>
+<div class="action-buttons">
+    <button class="action-btn finish-btn" onclick="confirmFinishMatch()">✅ Finish Match</button>
+    <button class="action-btn standings-btn" onclick="finishTournament()">📊 Standings</button>
+    <button class="action-btn reset-btn" onclick="confirmResetTournament()">🔄 Reset</button>
+</div>
 
 </div>
 
 <div id="rankingTab" style="display:none;">
-<h2>Ranking Table</h2>
+<h2>🏆 Ranking Table</h2>
 
 <div class="tabs">
     <button id="tabAmericano" class="tab-btn active-tab" onclick="showRankingTab('americano')">Americano</button>
@@ -224,7 +977,7 @@ th, td{
 
 <div id="americanoRanking">
 <h3>Americano Ranking</h3>
-<p style="font-size:12px;opacity:0.7;margin:5px 0;">Points = Total points scored (max 21 per match)</p>
+<p style="font-size:13px;opacity:0.7;margin:8px 0;">Points = Total points scored (max 21 per match)</p>
 <table>
 <thead>
 <tr>
@@ -242,7 +995,7 @@ th, td{
 
 <div id="tennisRanking" style="display:none;">
 <h3>Tennis Ranking</h3>
-<p style="font-size:12px;opacity:0.7;margin:5px 0;">Games = Total games won (e.g., 2-1 = 2 games for winner)</p>
+<p style="font-size:13px;opacity:0.7;margin:8px 0;">Games = Total games won (e.g., 2-1 = 2 games for winner)</p>
 <table>
 <thead>
 <tr>
@@ -261,7 +1014,7 @@ th, td{
 </div>
 
 <div id="historyTab" style="display:none;">
-<h2>Match History</h2>
+<h2>📜 Match History</h2>
 
 <div class="tabs">
     <button id="tabHistoryAmericano" class="tab-btn active-tab" onclick="showHistoryTab('americano')">Americano</button>
@@ -304,6 +1057,28 @@ th, td{
 
 </div>
 
+<!-- UNDO BUTTON -->
+<div class="undo-container">
+    <button class="undo-btn" id="undoBtn" onclick="undoLastAction()">
+        <span>↩️</span> Undo Last Action
+    </button>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="modal-content">
+        <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+        <p class="modal-message" id="modalMessage">Are you sure you want to proceed?</p>
+        <div class="modal-buttons">
+            <button class="modal-btn modal-cancel" onclick="closeModal()">Cancel</button>
+            <button class="modal-btn modal-confirm" id="modalConfirmBtn">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<!-- FEEDBACK TOAST -->
+<div class="feedback-toast" id="feedbackToast"></div>
+
 <script>
 
 // ===== DATA =====
@@ -344,6 +1119,10 @@ let tennisState = JSON.parse(localStorage.getItem("padelTennisState")) || {tenni
 // Match history
 let matchHistory = JSON.parse(localStorage.getItem("padelMatchHistory")) || [];
 
+// Action history for undo functionality
+let actionHistory = [];
+const MAX_HISTORY = 10;
+
 // ===== SAVE =====
 
 function saveData(){
@@ -360,6 +1139,130 @@ function saveData(){
 
     // Save current mode
     localStorage.setItem("padelCurrentMode", mode);
+}
+
+// ===== ACTION HISTORY =====
+
+function addToHistory(action){
+    actionHistory.push({
+        action: action,
+        timestamp: Date.now(),
+        mode: mode,
+        state: {
+            scoreA: scoreA,
+            scoreB: scoreB,
+            tennisA: tennisA,
+            tennisB: tennisB,
+            gamesA: gamesA,
+            gamesB: gamesB
+        }
+    });
+    
+    // Keep only last MAX_HISTORY actions
+    if(actionHistory.length > MAX_HISTORY){
+        actionHistory.shift();
+    }
+    
+    updateUndoButton();
+}
+
+function undoLastAction(){
+    if(actionHistory.length === 0) return;
+    
+    const lastAction = actionHistory.pop();
+    const prevState = lastAction.state;
+    
+    // Restore previous state
+    scoreA = prevState.scoreA;
+    scoreB = prevState.scoreB;
+    tennisA = prevState.tennisA;
+    tennisB = prevState.tennisB;
+    gamesA = prevState.gamesA;
+    gamesB = prevState.gamesB;
+    
+    // Update UI
+    updateScoreUI();
+    saveData();
+    updateUndoButton();
+    
+    // Show feedback
+    showFeedback("Action undone! ↩️");
+    
+    // Haptic feedback if available
+    if(navigator.vibrate){
+        navigator.vibrate(50);
+    }
+}
+
+function updateUndoButton(){
+    const undoBtn = document.getElementById("undoBtn");
+    if(actionHistory.length > 0){
+        undoBtn.classList.add("visible");
+    } else {
+        undoBtn.classList.remove("visible");
+    }
+}
+
+// ===== VISUAL FEEDBACK =====
+
+function showFeedback(message){
+    const toast = document.getElementById("feedbackToast");
+    toast.textContent = message;
+    toast.style.display = "block";
+    
+    // Haptic feedback
+    if(navigator.vibrate){
+        navigator.vibrate(30);
+    }
+    
+    setTimeout(() => {
+        toast.style.display = "none";
+    }, 1500);
+}
+
+function animateScore(elementId){
+    const element = document.getElementById(elementId);
+    element.classList.remove("pulse");
+    void element.offsetWidth; // Trigger reflow
+    element.classList.add("pulse");
+}
+
+// ===== MODAL =====
+
+let pendingAction = null;
+
+function showConfirmModal(title, message, confirmCallback){
+    document.getElementById("modalTitle").textContent = title;
+    document.getElementById("modalMessage").textContent = message;
+    
+    const confirmBtn = document.getElementById("modalConfirmBtn");
+    confirmBtn.onclick = () => {
+        closeModal();
+        confirmCallback();
+    };
+    
+    document.getElementById("confirmModal").classList.add("visible");
+}
+
+function closeModal(){
+    document.getElementById("confirmModal").classList.remove("visible");
+    pendingAction = null;
+}
+
+function confirmFinishMatch(){
+    showConfirmModal(
+        "Finish Match?",
+        "This will record the current scores and move to the next round. This action cannot be undone.",
+        finishMatch
+    );
+}
+
+function confirmResetTournament(){
+    showConfirmModal(
+        "Reset Tournament?",
+        "This will delete all match history, rankings, and scores. This action cannot be undone!",
+        resetTournament
+    );
 }
 
 // ===== TAB =====
@@ -448,8 +1351,15 @@ function setMode(m){
     document.getElementById("btnAmericano").classList.toggle("active", m==="americano");
     document.getElementById("btnTennis").classList.toggle("active", m==="tennis");
 
+    // Clear action history when switching modes
+    actionHistory = [];
+    updateUndoButton();
+
     // Save the restored state
     saveData();
+    
+    // Show feedback
+    showFeedback(m==="americano" ? "Americano Mode 🏆" : "Tennis Mode 🎾");
 }
 
 function updateScoreUI(){
@@ -489,6 +1399,8 @@ function updateScoreUI(){
 }
 
 function addPoint(team){
+    // Add to history before making changes
+    addToHistory("addPoint");
 
     // ===== AMERICANO =====
     if(mode==="americano"){
@@ -498,6 +1410,9 @@ function addPoint(team){
         if(team==="A") scoreA++;
         else scoreB++;
 
+        // Animate score
+        animateScore(team==="A"?"scoreA":"scoreB");
+
         if(scoreA + scoreB === 21){
             updateScoreUI();
             setTimeout(()=>finishMatch(),500);
@@ -506,12 +1421,16 @@ function addPoint(team){
 
         updateScoreUI();
         saveData();
+        showFeedback(team==="A"?"Team A +1 ➕" : "Team B +1 ➕");
         return;
     }
 
     // ===== TENNIS =====
     if(team==="A") tennisA++;
     else tennisB++;
+
+    // Animate score
+    animateScore(team==="A"?"scoreA":"scoreB");
 
     if(tennisA >=3 && tennisB >=3){
         if(Math.abs(tennisA - tennisB) >=2){
@@ -553,9 +1472,13 @@ function addPoint(team){
 
     updateScoreUI();
     saveData();
+    showFeedback(team==="A"?"Team A +1 ➕" : "Team B +1 ➕");
 }
 
 function minusPoint(team){
+    // Add to history before making changes
+    addToHistory("minusPoint");
+
     if(mode==="americano"){
         if(team==="A" && scoreA>0) scoreA--;
         if(team==="B" && scoreB>0) scoreB--;
@@ -563,8 +1486,10 @@ function minusPoint(team){
         if(team==="A" && tennisA>0) tennisA--;
         if(team==="B" && tennisB>0) tennisB--;
     }
+    
     updateScoreUI();
     saveData();
+    showFeedback(team==="A"?"Team A -1 ➖" : "Team B -1 ➖");
 }
 
 function finishMatch(){
@@ -636,10 +1561,22 @@ function finishMatch(){
     tennisA = tennisB = 0;
     gamesA = gamesB = 0;
 
+    // Clear action history after match finishes
+    actionHistory = [];
+    updateUndoButton();
+
     saveData();
     loadRound();
     updateScoreUI();
     updateRanking();
+    
+    // Show feedback
+    showFeedback("Match finished! ✅");
+    
+    // Haptic feedback
+    if(navigator.vibrate){
+        navigator.vibrate([50, 50, 50]);
+    }
 }
 
 // ===== RANKING =====
