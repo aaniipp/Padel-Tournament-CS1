@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Padel Tournament Ultimate</title>
+
+<style>
+body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+    background:linear-gradient(180deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:20px;
+    padding-bottom:80px;
+}
+
+.tabs{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.tab-btn{
+    padding:8px 16px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    background:#444;
+    color:white;
+}
+
+.active-tab{
+    background:#00e676;
+    color:black;
+}
+
+.teams{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+}
+
+.team{
+    flex:1;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:15px;
+}
+
+.score{
+    font-size:50px;
+    font-weight:700;
+    margin:10px 0;
+}
+
+.games{
+    font-size:14px;
+    opacity:0.7;
+}
+
+button{
+    padding:8px 14px;
+    border:none;
+    border-radius:10px;
+    margin:4px;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.green{background:#00e676;color:#000;}
+.red{background:#ff5252;color:white;}
+.blue{background:#448aff;color:white;}
+.gray{background:rgba(255,255,255,0.15);color:white;}
+.americano-btn{background:#ff9800;color:#000;font-weight:600;padding:10px 20px;font-size:15px;}
+.tennis-btn{background:#9c27b0;color:#fff;font-weight:600;padding:10px 20px;font-size:15px;}
+.americano-btn:hover{background:#ffa726;transform:scale(1.05);}
+.tennis-btn:hover{background:#ab47bc;transform:scale(1.05);}
+.americano-btn.active{background:#ffc107;color:#000;box-shadow:0 0 15px rgba(255,193,7,0.5);transform:scale(1.05);}
+.tennis-btn.active{background:#e91e63;color:#fff;box-shadow:0 0 15px rgba(233,30,99,0.5);transform:scale(1.05);}
+
+table{
+    width:100%;
+    margin-top:20px;
+    border-collapse:collapse;
+}
+
+th, td{
+    padding:8px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
+}
+
+.gold{color:#ffd700;font-weight:700;}
+.silver{color:#c0c0c0;font-weight:700;}
+.bronze{color:#cd7f32;font-weight:700;}
+.fourth{color:#a0a0a0;font-weight:700;}
+
+/* Mobile Responsive */
+@media (max-width: 600px){
+    .container{
+        padding:15px;
+        padding-bottom:100px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+
+    .tab-btn{
+        padding:10px 12px;
+        font-size:14px;
+    }
+
+    .americano-btn, .tennis-btn{
+        padding:12px 16px;
+        font-size:14px;
+        width:48%;
+    }
+
+    .teams{
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .score{
+        font-size:40px;
+    }
+
+    button{
+        padding:12px 16px;
+        font-size:16px;
+        margin:3px;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    th, td{
+        padding:6px 4px;
+    }
+
+    .games{
+        font-size:12px;
+    }
+}
+
+/* Touch-friendly buttons */
+@media (hover: none) and (pointer: coarse){
+    button{
+        min-height:44px;
+        min-width:44px;
+    }
+
+    .americano-btn, .tennis-btn{
+        min-height:50px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>PADEL TOURNAMENT</h1>
+
+<div class="tabs">
+    <button id="tabMatch" class="tab-btn active-tab" onclick="showTab('match')">Match</button>
+    <button id="tabRanking" class="tab-btn" onclick="showTab('ranking')">Ranking</button>
+    <button id="tabHistory" class="tab-btn" onclick="showTab('history')">History</button>
+</div>
+
+<div id="matchTab">
+
+<div>
+    <button id="btnAmericano" class="americano-btn active" onclick="setMode('americano')">🏆 Americano (Points)</button>
+    <button id="btnTennis" class="tennis-btn" onclick="setMode('tennis')">🎾 Tennis (Games)</button>
+</div>
+
+<h3 id="roundLabel"></h3>
+<h4 id="modeLabel">Mode: Americano (Total 21)</h4>
+
+<div class="teams">
+    <div class="team">
+        <h3 id="teamAName"></h3>
+        <div class="score" id="scoreA">0</div>
+        <div class="games" id="gamesA"></div>
+        <button class="green" onclick="addPoint('A')">+ Point</button>
+        <button class="red" onclick="minusPoint('A')">- Point</button>
+    </div>
+
+    <div class="team">
+        <h3 id="teamBName"></h3>
+        <div class="score" id="scoreB">0</div>
+        <div class="games" id="gamesB"></div>
+        <button class="green" onclick="addPoint('B')">+ Point</button>
+        <button class="red" onclick="minusPoint('B')">- Point</button>
+    </div>
+</div>
+
+<br>
+<button class="green" onclick="finishMatch()">Finish Match</button>
+<button class="gray" onclick="finishTournament()">View Standings</button>
+<button class="red" onclick="resetTournament()">Reset Tournament</button>
+
+</div>
+
+<div id="rankingTab" style="display:none;">
+<h2>Ranking Table</h2>
+
+<div class="tabs">
+    <button id="tabAmericano" class="tab-btn active-tab" onclick="showRankingTab('americano')">Americano</button>
+    <button id="tabTennis" class="tab-btn" onclick="showRankingTab('tennis')">Tennis</button>
+</div>
+
+<div id="americanoRanking">
+<h3>Americano Ranking</h3>
+<p style="font-size:12px;opacity:0.7;margin:5px 0;">Points = Total points scored (max 21 per match)</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Name</th>
+<th>Win</th>
+<th>Point</th>
+<th>Conceded</th>
+<th>GAP</th>
+</tr>
+</thead>
+<tbody id="americanoRankingBody"></tbody>
+</table>
+</div>
+
+<div id="tennisRanking" style="display:none;">
+<h3>Tennis Ranking</h3>
+<p style="font-size:12px;opacity:0.7;margin:5px 0;">Games = Total games won (e.g., 2-1 = 2 games for winner)</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Name</th>
+<th>Win</th>
+<th>Games</th>
+<th>Conceded</th>
+<th>GAP</th>
+</tr>
+</thead>
+<tbody id="tennisRankingBody"></tbody>
+</table>
+</div>
+
+</div>
+
+<div id="historyTab" style="display:none;">
+<h2>Match History</h2>
+
+<div class="tabs">
+    <button id="tabHistoryAmericano" class="tab-btn active-tab" onclick="showHistoryTab('americano')">Americano</button>
+    <button id="tabHistoryTennis" class="tab-btn" onclick="showHistoryTab('tennis')">Tennis</button>
+</div>
+
+<div id="americanoHistory">
+<h3>Americano Matches</h3>
+<table>
+<thead>
+<tr>
+<th>Round</th>
+<th>Team A</th>
+<th>Score</th>
+<th>Team B</th>
+<th>Winner</th>
+</tr>
+</thead>
+<tbody id="americanoHistoryBody"></tbody>
+</table>
+</div>
+
+<div id="tennisHistory" style="display:none;">
+<h3>Tennis Matches</h3>
+<table>
+<thead>
+<tr>
+<th>Round</th>
+<th>Team A</th>
+<th>Games Won</th>
+<th>Team B</th>
+<th>Winner</th>
+</tr>
+</thead>
+<tbody id="tennisHistoryBody"></tbody>
+</table>
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+// ===== DATA =====
+
+let defaultPlayers = {
+    "Aria": {americano:{win:0, point:0, conceded:0}, tennis:{win:0, point:0, conceded:0}},
+    "Bryan": {americano:{win:0, point:0, conceded:0}, tennis:{win:0, point:0, conceded:0}},
+    "Hanip": {americano:{win:0, point:0, conceded:0}, tennis:{win:0, point:0, conceded:0}},
+    "Lutpi": {americano:{win:0, point:0, conceded:0}, tennis:{win:0, point:0, conceded:0}}
+};
+
+let players = JSON.parse(localStorage.getItem("padelPlayers")) || defaultPlayers;
+let americanoRound = parseInt(localStorage.getItem("padelAmericanoRound")) || 0;
+let tennisRound = parseInt(localStorage.getItem("padelTennisRound")) || 0;
+let currentRound = americanoRound;
+
+let rounds = [
+    {A:["Aria","Bryan"], B:["Hanip","Lutpi"]},
+    {A:["Aria","Hanip"], B:["Bryan","Lutpi"]},
+    {A:["Aria","Lutpi"], B:["Bryan","Hanip"]}
+];
+
+let mode = localStorage.getItem("padelCurrentMode") || "americano";
+let scoreA = 0;
+let scoreB = 0;
+
+// Tennis variables
+let tennisPoints = ["0","15","30","40"];
+let tennisA = 0;
+let tennisB = 0;
+let gamesA = 0;
+let gamesB = 0;
+
+// Match state for each mode
+let americanoState = JSON.parse(localStorage.getItem("padelAmericanoState")) || {scoreA:0, scoreB:0};
+let tennisState = JSON.parse(localStorage.getItem("padelTennisState")) || {tennisA:0, tennisB:0, gamesA:0, gamesB:0};
+
+// Match history
+let matchHistory = JSON.parse(localStorage.getItem("padelMatchHistory")) || [];
+
+// ===== SAVE =====
+
+function saveData(){
+    localStorage.setItem("padelPlayers", JSON.stringify(players));
+    localStorage.setItem("padelAmericanoRound", americanoRound);
+    localStorage.setItem("padelTennisRound", tennisRound);
+    localStorage.setItem("padelMatchHistory", JSON.stringify(matchHistory));
+
+    // Save current state for each mode
+    americanoState = {scoreA: scoreA, scoreB: scoreB};
+    tennisState = {tennisA: tennisA, tennisB: tennisB, gamesA: gamesA, gamesB: gamesB};
+    localStorage.setItem("padelAmericanoState", JSON.stringify(americanoState));
+    localStorage.setItem("padelTennisState", JSON.stringify(tennisState));
+
+    // Save current mode
+    localStorage.setItem("padelCurrentMode", mode);
+}
+
+// ===== TAB =====
+
+function showTab(tab){
+    document.getElementById("matchTab").style.display = tab==="match"?"block":"none";
+    document.getElementById("rankingTab").style.display = tab==="ranking"?"block":"none";
+    document.getElementById("historyTab").style.display = tab==="history"?"block":"none";
+
+    document.getElementById("tabMatch").classList.toggle("active-tab", tab==="match");
+    document.getElementById("tabRanking").classList.toggle("active-tab", tab==="ranking");
+    document.getElementById("tabHistory").classList.toggle("active-tab", tab==="history");
+
+    if(tab==="match"){
+        // Restore score UI and round when returning to match tab
+        updateScoreUI();
+        loadRound();
+    } else if(tab==="ranking"){
+        updateRanking();
+    } else if(tab==="history"){
+        updateHistory();
+    }
+}
+
+function showRankingTab(modeTab){
+    document.getElementById("americanoRanking").style.display = modeTab==="americano"?"block":"none";
+    document.getElementById("tennisRanking").style.display = modeTab==="tennis"?"block":"none";
+
+    document.getElementById("tabAmericano").classList.toggle("active-tab", modeTab==="americano");
+    document.getElementById("tabTennis").classList.toggle("active-tab", modeTab==="tennis");
+
+    updateRanking();
+}
+
+function showHistoryTab(modeTab){
+    document.getElementById("americanoHistory").style.display = modeTab==="americano"?"block":"none";
+    document.getElementById("tennisHistory").style.display = modeTab==="tennis"?"block":"none";
+
+    document.getElementById("tabHistoryAmericano").classList.toggle("active-tab", modeTab==="americano");
+    document.getElementById("tabHistoryTennis").classList.toggle("active-tab", modeTab==="tennis");
+
+    updateHistory();
+}
+
+// ===== MATCH =====
+
+function loadRound(){
+    let r = rounds[currentRound];
+    document.getElementById("teamAName").innerText = r.A.join(" & ");
+    document.getElementById("teamBName").innerText = r.B.join(" & ");
+    document.getElementById("roundLabel").innerText = "Round " + (currentRound+1) + " (" + (mode==="americano"?"Americano":"Tennis") + ")";
+}
+
+function setMode(m){
+    // Save current state before switching
+    if(mode==="americano"){
+        americanoState = {scoreA: scoreA, scoreB: scoreB};
+    } else {
+        tennisState = {tennisA: tennisA, tennisB: tennisB, gamesA: gamesA, gamesB: gamesB};
+    }
+
+    mode = m;
+
+    // Restore state for the new mode
+    if(m==="americano"){
+        scoreA = americanoState.scoreA;
+        scoreB = americanoState.scoreB;
+        tennisA = tennisB = 0;
+        gamesA = gamesB = 0;
+        currentRound = americanoRound;
+    } else {
+        tennisA = tennisState.tennisA;
+        tennisB = tennisState.tennisB;
+        gamesA = tennisState.gamesA;
+        gamesB = tennisState.gamesB;
+        scoreA = scoreB = 0;
+        currentRound = tennisRound;
+    }
+
+    updateScoreUI();
+    loadRound();
+    document.getElementById("modeLabel").innerText =
+        m==="americano" ? "Mode: Americano (Total Points: 21)" : "Mode: Tennis (Best of 3 Games)";
+
+    // Toggle active class on mode buttons
+    document.getElementById("btnAmericano").classList.toggle("active", m==="americano");
+    document.getElementById("btnTennis").classList.toggle("active", m==="tennis");
+
+    // Save the restored state
+    saveData();
+}
+
+function updateScoreUI(){
+
+    if(mode==="americano"){
+        document.getElementById("scoreA").innerText = scoreA;
+        document.getElementById("scoreB").innerText = scoreB;
+        document.getElementById("gamesA").innerText = "";
+        document.getElementById("gamesB").innerText = "";
+        return;
+    }
+
+    let displayA, displayB;
+
+    if(tennisA >=3 && tennisB >=3){
+        if(tennisA === tennisB){
+            displayA = displayB = "Deuce";
+        }
+        else if(tennisA > tennisB){
+            displayA = "Adv";
+            displayB = "40";
+        }
+        else{
+            displayA = "40";
+            displayB = "Adv";
+        }
+    } else {
+        displayA = tennisPoints[tennisA] || "0";
+        displayB = tennisPoints[tennisB] || "0";
+    }
+
+    document.getElementById("scoreA").innerText = displayA;
+    document.getElementById("scoreB").innerText = displayB;
+
+    document.getElementById("gamesA").innerText = "Games: " + gamesA;
+    document.getElementById("gamesB").innerText = "Games: " + gamesB;
+}
+
+function addPoint(team){
+
+    // ===== AMERICANO =====
+    if(mode==="americano"){
+        let total = scoreA + scoreB;
+        if(total >= 21) return;
+
+        if(team==="A") scoreA++;
+        else scoreB++;
+
+        if(scoreA + scoreB === 21){
+            updateScoreUI();
+            setTimeout(()=>finishMatch(),500);
+            return;
+        }
+
+        updateScoreUI();
+        saveData();
+        return;
+    }
+
+    // ===== TENNIS =====
+    if(team==="A") tennisA++;
+    else tennisB++;
+
+    if(tennisA >=3 && tennisB >=3){
+        if(Math.abs(tennisA - tennisB) >=2){
+            if(tennisA > tennisB) gamesA++;
+            else gamesB++;
+
+            tennisA = tennisB = 0;
+
+            // Check for best of 3 winner
+            if(gamesA === 2 || gamesB === 2){
+                updateScoreUI();
+                setTimeout(()=>finishMatch(),500);
+                return;
+            }
+        }
+    }
+    else if(tennisA >=4){
+        gamesA++;
+        tennisA = tennisB = 0;
+
+        // Check for best of 3 winner
+        if(gamesA === 2 || gamesB === 2){
+            updateScoreUI();
+            setTimeout(()=>finishMatch(),500);
+            return;
+        }
+    }
+    else if(tennisB >=4){
+        gamesB++;
+        tennisA = tennisB = 0;
+
+        // Check for best of 3 winner
+        if(gamesA === 2 || gamesB === 2){
+            updateScoreUI();
+            setTimeout(()=>finishMatch(),500);
+            return;
+        }
+    }
+
+    updateScoreUI();
+    saveData();
+}
+
+function minusPoint(team){
+    if(mode==="americano"){
+        if(team==="A" && scoreA>0) scoreA--;
+        if(team==="B" && scoreB>0) scoreB--;
+    } else {
+        if(team==="A" && tennisA>0) tennisA--;
+        if(team==="B" && tennisB>0) tennisB--;
+    }
+    updateScoreUI();
+    saveData();
+}
+
+function finishMatch(){
+
+    let finalA = mode==="americano" ? scoreA : gamesA;
+    let finalB = mode==="americano" ? scoreB : gamesB;
+
+    let r = rounds[currentRound];
+
+    // Save match history
+    let matchRecord = {
+        round: currentRound + 1,
+        mode: mode,
+        teamA: r.A.join(" & "),
+        teamB: r.B.join(" & "),
+        scoreA: finalA,
+        scoreB: finalB,
+        winner: finalA > finalB ? r.A.join(" & ") : (finalB > finalA ? r.B.join(" & ") : "Draw"),
+        timestamp: new Date().toISOString()
+    };
+    matchHistory.push(matchRecord);
+
+    if(mode==="americano"){
+        // Americano: total points scored
+        r.A.forEach(p=>{
+            players[p].americano.point += finalA;
+            players[p].americano.conceded += finalB;
+        });
+
+        r.B.forEach(p=>{
+            players[p].americano.point += finalB;
+            players[p].americano.conceded += finalA;
+        });
+
+        if(finalA > finalB){
+            r.A.forEach(p=>players[p].americano.win++);
+        } else if(finalB > finalA){
+            r.B.forEach(p=>players[p].americano.win++);
+        }
+    } else {
+        // Tennis: track games won (e.g., 2-1 = 2 games for winner, 1 game for loser)
+        r.A.forEach(p=>{
+            players[p].tennis.point += gamesA;
+            players[p].tennis.conceded += gamesB;
+        });
+
+        r.B.forEach(p=>{
+            players[p].tennis.point += gamesB;
+            players[p].tennis.conceded += gamesA;
+        });
+
+        if(gamesA > gamesB){
+            r.A.forEach(p=>players[p].tennis.win++);
+        } else if(gamesB > gamesA){
+            r.B.forEach(p=>players[p].tennis.win++);
+        }
+    }
+
+    // Update the appropriate round counter
+    if(mode==="americano"){
+        americanoRound = (americanoRound+1) % rounds.length;
+        americanoState = {scoreA: 0, scoreB: 0};
+    } else {
+        tennisRound = (tennisRound+1) % rounds.length;
+        tennisState = {tennisA: 0, tennisB: 0, gamesA: 0, gamesB: 0};
+    }
+
+    scoreA = scoreB = 0;
+    tennisA = tennisB = 0;
+    gamesA = gamesB = 0;
+
+    saveData();
+    loadRound();
+    updateScoreUI();
+    updateRanking();
+}
+
+// ===== RANKING =====
+
+function updateRanking(){
+
+    // Americano Ranking
+    let americanoArr = Object.keys(players).map(name=>{
+        return {
+            name:name,
+            win:players[name].americano.win,
+            point:players[name].americano.point,
+            conceded:players[name].americano.conceded,
+            gap:players[name].americano.point - players[name].americano.conceded
+        }
+    });
+
+    americanoArr.sort((a,b)=>{
+        if(b.win !== a.win) return b.win - a.win;
+        return b.gap - a.gap;
+    });
+
+    let americanoHtml="";
+    americanoArr.forEach((p,i)=>{
+        let rankClass = "";
+        if(i===0) rankClass = "gold";
+        else if(i===1) rankClass = "silver";
+        else if(i===2) rankClass = "bronze";
+        else if(i===3) rankClass = "fourth";
+
+        americanoHtml += `
+        <tr>
+        <td class="${rankClass}">${i+1}</td>
+        <td>${p.name}</td>
+        <td>${p.win}</td>
+        <td>${p.point}</td>
+        <td>${p.conceded}</td>
+        <td>${p.gap}</td>
+        </tr>`;
+    });
+
+    document.getElementById("americanoRankingBody").innerHTML = americanoHtml;
+
+    // Tennis Ranking
+    let tennisArr = Object.keys(players).map(name=>{
+        return {
+            name:name,
+            win:players[name].tennis.win,
+            point:players[name].tennis.point,
+            conceded:players[name].tennis.conceded,
+            gap:players[name].tennis.point - players[name].tennis.conceded
+        }
+    });
+
+    tennisArr.sort((a,b)=>{
+        if(b.win !== a.win) return b.win - a.win;
+        return b.gap - a.gap;
+    });
+
+    let tennisHtml="";
+    tennisArr.forEach((p,i)=>{
+        let rankClass = "";
+        if(i===0) rankClass = "gold";
+        else if(i===1) rankClass = "silver";
+        else if(i===2) rankClass = "bronze";
+        else if(i===3) rankClass = "fourth";
+
+        tennisHtml += `
+        <tr>
+        <td class="${rankClass}">${i+1}</td>
+        <td>${p.name}</td>
+        <td>${p.win}</td>
+        <td>${p.point}</td>
+        <td>${p.conceded}</td>
+        <td>${p.gap}</td>
+        </tr>`;
+    });
+
+    document.getElementById("tennisRankingBody").innerHTML = tennisHtml;
+}
+
+// ===== HISTORY =====
+
+function updateHistory(){
+    // Americano History
+    let americanoMatches = matchHistory.filter(m => m.mode === "americano");
+    let americanoHtml = "";
+    americanoMatches.forEach((m, i) => {
+        let rankClass = "";
+        if(i===0) rankClass = "gold";
+        else if(i===1) rankClass = "silver";
+        else if(i===2) rankClass = "bronze";
+        else if(i===3) rankClass = "fourth";
+
+        americanoHtml += `
+        <tr>
+        <td class="${rankClass}">${m.round}</td>
+        <td>${m.teamA}</td>
+        <td>${m.scoreA} - ${m.scoreB}</td>
+        <td>${m.teamB}</td>
+        <td class="${m.winner === m.teamA ? 'gold' : ''}">${m.winner}</td>
+        </tr>`;
+    });
+    if(americanoMatches.length === 0){
+        americanoHtml = "<tr><td colspan='5'>No matches played yet</td></tr>";
+    }
+    document.getElementById("americanoHistoryBody").innerHTML = americanoHtml;
+
+    // Tennis History
+    let tennisMatches = matchHistory.filter(m => m.mode === "tennis");
+    let tennisHtml = "";
+    tennisMatches.forEach((m, i) => {
+        let rankClass = "";
+        if(i===0) rankClass = "gold";
+        else if(i===1) rankClass = "silver";
+        else if(i===2) rankClass = "bronze";
+        else if(i===3) rankClass = "fourth";
+
+        tennisHtml += `
+        <tr>
+        <td class="${rankClass}">${m.round}</td>
+        <td>${m.teamA}</td>
+        <td>${m.scoreA} - ${m.scoreB}</td>
+        <td>${m.teamB}</td>
+        <td class="${m.winner === m.teamA ? 'gold' : ''}">${m.winner}</td>
+        </tr>`;
+    });
+    if(tennisMatches.length === 0){
+        tennisHtml = "<tr><td colspan='5'>No matches played yet</td></tr>";
+    }
+    document.getElementById("tennisHistoryBody").innerHTML = tennisHtml;
+}
+
+function finishTournament(){
+    showTab('ranking');
+}
+
+function resetTournament(){
+    localStorage.removeItem("padelPlayers");
+    localStorage.removeItem("padelAmericanoRound");
+    localStorage.removeItem("padelTennisRound");
+    localStorage.removeItem("padelMatchHistory");
+    localStorage.removeItem("padelAmericanoState");
+    localStorage.removeItem("padelTennisState");
+    localStorage.removeItem("padelCurrentMode");
+    location.reload();
+}
+
+// Initialize state based on mode
+if(mode==="americano"){
+    currentRound = americanoRound;
+    scoreA = americanoState.scoreA;
+    scoreB = americanoState.scoreB;
+    document.getElementById("btnAmericano").classList.add("active");
+    document.getElementById("btnTennis").classList.remove("active");
+} else {
+    currentRound = tennisRound;
+    tennisA = tennisState.tennisA;
+    tennisB = tennisState.tennisB;
+    gamesA = tennisState.gamesA;
+    gamesB = tennisState.gamesB;
+    document.getElementById("btnAmericano").classList.remove("active");
+    document.getElementById("btnTennis").classList.add("active");
+}
+
+loadRound();
+updateScoreUI();
+updateRanking();
+showRankingTab('americano');
+showHistoryTab('americano');
+
+// Set correct mode label
+document.getElementById("modeLabel").innerText =
+    mode==="americano" ? "Mode: Americano (Total Points: 21)" : "Mode: Tennis (Best of 3 Games)";
+
+</script>
+</body>
+</html>
