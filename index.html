@@ -39,22 +39,23 @@ body{
 .tabs{
     display:flex;
     justify-content:center;
-    gap:12px;
+    gap:8px;
     margin-bottom:20px;
+    flex-wrap:wrap;
 }
 
 .tab-btn{
-    padding:14px 24px;
+    padding:12px 18px;
     border:none;
-    border-radius:16px;
+    border-radius:14px;
     cursor:pointer;
     background:rgba(255,255,255,0.15);
     color:white;
-    font-size:16px;
+    font-size:14px;
     font-weight:600;
     transition:all 0.3s ease;
-    min-height:52px;
-    min-width:100px;
+    min-height:48px;
+    min-width:80px;
 }
 
 .tab-btn:active{
@@ -440,6 +441,313 @@ tr:last-child td{
 .bronze{color:#cd7f32;font-weight:700;}
 .fourth{color:#a0a0a0;font-weight:700;}
 
+/* ===== PLAYERS MANAGEMENT ===== */
+.players-section{
+    background:rgba(255,255,255,0.05);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.players-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.players-header h3{
+    margin:0;
+    font-size:20px;
+}
+
+.add-player-btn{
+    padding:12px 24px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#00e676,#00c853);
+    color:black;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    min-height:48px;
+    transition:all 0.3s ease;
+}
+
+.add-player-btn:active{
+    transform:scale(0.95);
+}
+
+.player-input-container{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.player-input{
+    flex:1;
+    min-width:150px;
+    padding:14px 18px;
+    border:2px solid rgba(255,255,255,0.2);
+    border-radius:14px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:16px;
+    outline:none;
+    transition:all 0.3s ease;
+}
+
+.player-input::placeholder{
+    color:rgba(255,255,255,0.5);
+}
+
+.player-input:focus{
+    border-color:#00e676;
+    background:rgba(255,255,255,0.15);
+}
+
+.player-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+    gap:12px;
+}
+
+.player-card{
+    background:rgba(255,255,255,0.1);
+    border-radius:16px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    transition:all 0.3s ease;
+    border:2px solid rgba(255,255,255,0.1);
+}
+
+.player-card:hover{
+    border-color:rgba(0,230,118,0.5);
+    transform:translateY(-2px);
+}
+
+.player-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#00e676,#00c853);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:700;
+    color:black;
+}
+
+.player-name{
+    font-size:16px;
+    font-weight:600;
+    word-break:break-word;
+    text-align:center;
+}
+
+.player-stats{
+    font-size:12px;
+    opacity:0.7;
+    text-align:center;
+}
+
+.player-actions{
+    display:flex;
+    gap:8px;
+}
+
+.player-action-btn{
+    padding:8px 12px;
+    border:none;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    min-height:36px;
+    transition:all 0.2s ease;
+}
+
+.edit-btn{
+    background:rgba(255,152,0,0.3);
+    color:#ff9800;
+}
+
+.delete-btn{
+    background:rgba(255,82,82,0.3);
+    color:#ff5252;
+}
+
+.player-action-btn:active{
+    transform:scale(0.95);
+}
+
+/* ===== TOURNAMENT SETTINGS ===== */
+.settings-section{
+    background:rgba(255,255,255,0.05);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.settings-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.settings-header h3{
+    margin:0;
+    font-size:20px;
+}
+
+.settings-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:16px;
+    margin-bottom:20px;
+}
+
+.setting-item{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.setting-label{
+    font-size:14px;
+    opacity:0.8;
+}
+
+.setting-input{
+    padding:12px 16px;
+    border:2px solid rgba(255,255,255,0.2);
+    border-radius:12px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:16px;
+    outline:none;
+    transition:all 0.3s ease;
+}
+
+.setting-input:focus{
+    border-color:#00e676;
+    background:rgba(255,255,255,0.15);
+}
+
+.setting-select{
+    padding:12px 16px;
+    border:2px solid rgba(255,255,255,0.2);
+    border-radius:12px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:16px;
+    outline:none;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+
+.setting-select:focus{
+    border-color:#00e676;
+}
+
+.setting-select option{
+    background:#1a2a3a;
+    color:white;
+}
+
+.save-settings-btn{
+    padding:14px 28px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#00e676,#00c853);
+    color:black;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    min-height:52px;
+    transition:all 0.3s ease;
+    width:100%;
+}
+
+.save-settings-btn:active{
+    transform:scale(0.95);
+}
+
+.rounds-preview{
+    background:rgba(255,255,255,0.05);
+    border-radius:16px;
+    padding:16px;
+    margin-top:20px;
+}
+
+.rounds-preview h4{
+    margin:0 0 12px 0;
+    font-size:16px;
+    color:#00e676;
+}
+
+.round-item{
+    background:rgba(255,255,255,0.1);
+    border-radius:12px;
+    padding:12px;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.round-item:last-child{
+    margin-bottom:0;
+}
+
+.round-match{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:8px 12px;
+    background:rgba(0,230,118,0.1);
+    border-radius:8px;
+    margin-top:4px;
+}
+
+.round-match span:first-child{
+    color:#00e676;
+    font-weight:600;
+}
+
+.round-match span:last-child{
+    color:#ff9800;
+    font-weight:600;
+}
+
+/* ===== NO PLAYERS STATE ===== */
+.no-players{
+    text-align:center;
+    padding:40px 20px;
+    opacity:0.7;
+}
+
+.no-players-icon{
+    font-size:48px;
+    margin-bottom:16px;
+}
+
+.no-players-text{
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.no-players-hint{
+    font-size:14px;
+    opacity:0.6;
+}
+
 /* ===== VISUAL FEEDBACK ===== */
 .feedback-toast{
     position:fixed;
@@ -476,15 +784,15 @@ tr:last-child td{
     }
 
     .tabs{
-        gap:8px;
+        gap:6px;
         margin-bottom:15px;
     }
 
     .tab-btn{
-        padding:12px 14px;
-        font-size:13px;
-        min-height:48px;
-        min-width:70px;
+        padding:10px 14px;
+        font-size:12px;
+        min-height:44px;
+        min-width:65px;
         border-radius:12px;
     }
 
@@ -622,9 +930,32 @@ tr:last-child td{
         min-height:56px;
         min-width:160px;
     }
+
+    .player-list{
+        grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+        gap:10px;
+    }
+
+    .player-card{
+        padding:12px;
+    }
+
+    .player-avatar{
+        width:40px;
+        height:40px;
+        font-size:20px;
+    }
+
+    .player-name{
+        font-size:14px;
+    }
+
+    .settings-grid{
+        grid-template-columns:1fr;
+    }
 }
 
-/* ===== SMALL MOBILE (iPhone SE, etc.) ===== */
+/* ===== SMALL MOBILE ===== */
 @media (max-width: 375px){
     .container{
         padding:10px;
@@ -636,20 +967,16 @@ tr:last-child td{
     }
 
     .tab-btn{
-        padding:10px 12px;
-        font-size:12px;
-        min-height:44px;
-        min-width:60px;
+        padding:8px 10px;
+        font-size:11px;
+        min-height:40px;
+        min-width:55px;
     }
 
     .mode-btn{
         padding:12px 10px;
         font-size:12px;
         min-height:56px;
-    }
-
-    .mode-btn small{
-        font-size:10px;
     }
 
     .score-display{
@@ -697,64 +1024,9 @@ tr:last-child td{
     }
 }
 
-/* ===== SMALL MOBILE (iPhone SE, etc.) ===== */
-@media (max-width: 375px){
-    .container{
-        padding:10px;
-        padding-bottom:150px;
-    }
-
-    h1{
-        font-size:20px;
-    }
-
-    .tab-btn{
-        padding:10px 12px;
-        font-size:12px;
-        min-height:44px;
-        min-width:60px;
-    }
-
-    .mode-btn{
-        padding:12px 10px;
-        font-size:12px;
-        min-height:56px;
-    }
-
-    .mode-btn small{
-        font-size:10px;
-    }
-
-    .score-display{
-        font-size:48px;
-    }
-
-    .score-btn{
-        padding:12px 16px;
-        font-size:15px;
-        min-width:75px;
-        min-height:54px;
-    }
-
-    .action-btn{
-        padding:10px 14px;
-        font-size:12px;
-        min-height:48px;
-        min-width:80px;
-    }
-
-    table{
-        font-size:10px;
-    }
-
-    th, td{
-        padding:6px 3px;
-    }
-}
-
 /* ===== TOUCH OPTIMIZATION ===== */
 @media (hover: none) and (pointer: coarse){
-    .score-btn, .action-btn, .mode-btn, .tab-btn, .undo-btn, .modal-btn{
+    .score-btn, .action-btn, .mode-btn, .tab-btn, .undo-btn, .modal-btn, .add-player-btn, .save-settings-btn, .player-action-btn{
         min-height:56px;
         min-width:56px;
         touch-action: manipulation;
@@ -904,6 +1176,11 @@ button:focus-visible{
     outline:3px solid #00e676;
     outline-offset:2px;
 }
+
+input:focus, select:focus{
+    outline:3px solid #00e676;
+    outline-offset:2px;
+}
 </style>
 </head>
 
@@ -915,6 +1192,7 @@ button:focus-visible{
 
 <div class="tabs">
     <button id="tabMatch" class="tab-btn active-tab" onclick="showTab('match')">Match</button>
+    <button id="tabPlayers" class="tab-btn" onclick="showTab('players')">Players</button>
     <button id="tabRanking" class="tab-btn" onclick="showTab('ranking')">Ranking</button>
     <button id="tabHistory" class="tab-btn" onclick="showTab('history')">History</button>
 </div>
@@ -963,6 +1241,60 @@ button:focus-visible{
     <button class="action-btn finish-btn" onclick="confirmFinishMatch()">✅ Finish Match</button>
     <button class="action-btn standings-btn" onclick="finishTournament()">📊 Standings</button>
     <button class="action-btn reset-btn" onclick="confirmResetTournament()">🔄 Reset</button>
+</div>
+
+</div>
+
+<div id="playersTab" style="display:none;">
+
+<div class="players-section">
+    <div class="players-header">
+        <h3>👥 Players</h3>
+        <button class="add-player-btn" onclick="showAddPlayerInput()">➕ Add Player</button>
+    </div>
+    
+    <div id="addPlayerContainer" style="display:none;">
+        <div class="player-input-container">
+            <input type="text" id="newPlayerName" class="player-input" placeholder="Enter player name..." onkeypress="handlePlayerInputKeypress(event)">
+            <button class="add-player-btn" onclick="addPlayer()">Add</button>
+        </div>
+    </div>
+    
+    <div id="playersList" class="player-list"></div>
+    
+    <div id="noPlayersMessage" class="no-players" style="display:none;">
+        <div class="no-players-icon">👥</div>
+        <div class="no-players-text">No players added yet</div>
+        <div class="no-players-hint">Add players to start the tournament</div>
+    </div>
+</div>
+
+<div class="settings-section">
+    <div class="settings-header">
+        <h3>⚙️ Tournament Settings</h3>
+    </div>
+    
+    <div class="settings-grid">
+        <div class="setting-item">
+            <label class="setting-label">Players per Team</label>
+            <select id="playersPerTeam" class="setting-select">
+                <option value="2">2 Players</option>
+                <option value="1">1 Player (Singles)</option>
+            </select>
+        </div>
+        
+        <div class="setting-item">
+            <label class="setting-label">Number of Rounds</label>
+            <input type="number" id="numRounds" class="setting-input" value="3" min="1" max="20">
+        </div>
+    </div>
+    
+    <button class="save-settings-btn" onclick="generateRounds()">🔄 Generate New Schedule</button>
+    
+    <div id="roundsPreview" class="rounds-preview" style="display:none;">
+        <h4>📋 Match Schedule</h4>
+        <div id="roundsPreviewContent"></div>
+    </div>
 </div>
 
 </div>
@@ -1090,16 +1422,26 @@ let defaultPlayers = {
     "Lutpi": {americano:{win:0, point:0, conceded:0}, tennis:{win:0, point:0, conceded:0}}
 };
 
-let players = JSON.parse(localStorage.getItem("padelPlayers")) || defaultPlayers;
+let players = JSON.parse(localStorage.getItem("padelPlayers")) || {...defaultPlayers};
 let americanoRound = parseInt(localStorage.getItem("padelAmericanoRound")) || 0;
 let tennisRound = parseInt(localStorage.getItem("padelTennisRound")) || 0;
 let currentRound = americanoRound;
 
-let rounds = [
-    {A:["Aria","Bryan"], B:["Hanip","Lutpi"]},
-    {A:["Aria","Hanip"], B:["Bryan","Lutpi"]},
-    {A:["Aria","Lutpi"], B:["Bryan","Hanip"]}
-];
+let rounds = JSON.parse(localStorage.getItem("padelRounds")) || generateDefaultRounds();
+
+function generateDefaultRounds() {
+    const playerNames = Object.keys(players);
+    if (playerNames.length < 4) {
+        return [
+            {A:[playerNames[0] || "Player 1", playerNames[1] || "Player 2"], B:[playerNames[2] || "Player 3", playerNames[3] || "Player 4"]}
+        ];
+    }
+    return [
+        {A:[playerNames[0], playerNames[1]], B:[playerNames[2], playerNames[3]]},
+        {A:[playerNames[0], playerNames[2]], B:[playerNames[1], playerNames[3]]},
+        {A:[playerNames[0], playerNames[3]], B:[playerNames[1], playerNames[2]]}
+    ];
+}
 
 let mode = localStorage.getItem("padelCurrentMode") || "americano";
 let scoreA = 0;
@@ -1123,6 +1465,15 @@ let matchHistory = JSON.parse(localStorage.getItem("padelMatchHistory")) || [];
 let actionHistory = [];
 const MAX_HISTORY = 10;
 
+// Tournament settings
+let tournamentSettings = JSON.parse(localStorage.getItem("padelTournamentSettings")) || {
+    playersPerTeam: 2,
+    numRounds: 3
+};
+
+// Player editing state
+let editingPlayer = null;
+
 // ===== SAVE =====
 
 function saveData(){
@@ -1130,6 +1481,8 @@ function saveData(){
     localStorage.setItem("padelAmericanoRound", americanoRound);
     localStorage.setItem("padelTennisRound", tennisRound);
     localStorage.setItem("padelMatchHistory", JSON.stringify(matchHistory));
+    localStorage.setItem("padelRounds", JSON.stringify(rounds));
+    localStorage.setItem("padelTournamentSettings", JSON.stringify(tournamentSettings));
 
     // Save current state for each mode
     americanoState = {scoreA: scoreA, scoreB: scoreB};
@@ -1269,10 +1622,12 @@ function confirmResetTournament(){
 
 function showTab(tab){
     document.getElementById("matchTab").style.display = tab==="match"?"block":"none";
+    document.getElementById("playersTab").style.display = tab==="players"?"block":"none";
     document.getElementById("rankingTab").style.display = tab==="ranking"?"block":"none";
     document.getElementById("historyTab").style.display = tab==="history"?"block":"none";
 
     document.getElementById("tabMatch").classList.toggle("active-tab", tab==="match");
+    document.getElementById("tabPlayers").classList.toggle("active-tab", tab==="players");
     document.getElementById("tabRanking").classList.toggle("active-tab", tab==="ranking");
     document.getElementById("tabHistory").classList.toggle("active-tab", tab==="history");
 
@@ -1280,6 +1635,9 @@ function showTab(tab){
         // Restore score UI and round when returning to match tab
         updateScoreUI();
         loadRound();
+    } else if(tab==="players"){
+        renderPlayersList();
+        loadSettings();
     } else if(tab==="ranking"){
         updateRanking();
     } else if(tab==="history"){
@@ -1307,13 +1665,253 @@ function showHistoryTab(modeTab){
     updateHistory();
 }
 
+// ===== PLAYERS MANAGEMENT =====
+
+function showAddPlayerInput(){
+    const container = document.getElementById("addPlayerContainer");
+    container.style.display = container.style.display === "none" ? "block" : "none";
+    if(container.style.display === "block"){
+        document.getElementById("newPlayerName").focus();
+    }
+}
+
+function handlePlayerInputKeypress(event){
+    if(event.key === "Enter"){
+        addPlayer();
+    }
+}
+
+function addPlayer(){
+    const input = document.getElementById("newPlayerName");
+    const name = input.value.trim();
+    
+    if(!name){
+        showFeedback("Please enter a name! ⚠️");
+        return;
+    }
+    
+    if(players[name]){
+        showFeedback("Player already exists! ⚠️");
+        return;
+    }
+    
+    players[name] = {
+        americano: {win:0, point:0, conceded:0},
+        tennis: {win:0, point:0, conceded:0}
+    };
+    
+    input.value = "";
+    saveData();
+    renderPlayersList();
+    showFeedback(`Player "${name}" added! ✅`);
+    
+    // Haptic feedback
+    if(navigator.vibrate){
+        navigator.vibrate([30, 50, 30]);
+    }
+}
+
+function editPlayer(oldName){
+    const newName = prompt(`Edit player name:`, oldName);
+    
+    if(newName === null) return; // Cancelled
+    if(!newName.trim()){
+        showFeedback("Name cannot be empty! ⚠️");
+        return;
+    }
+    if(newName.trim() === oldName) return; // No change
+    if(players[newName.trim()]){
+        showFeedback("Player with this name already exists! ⚠️");
+        return;
+    }
+    
+    // Preserve player stats
+    players[newName.trim()] = players[oldName];
+    delete players[oldName];
+    
+    // Update rounds with new name
+    rounds.forEach(round => {
+        round.A = round.A.map(p => p === oldName ? newName.trim() : p);
+        round.B = round.B.map(p => p === oldName ? newName.trim() : p);
+    });
+    
+    saveData();
+    renderPlayersList();
+    showFeedback(`Player renamed to "${newName.trim()}"! ✅`);
+}
+
+function confirmDeletePlayer(name){
+    showConfirmModal(
+        `Delete Player "${name}"?`,
+        `This will remove the player and all their statistics. This action cannot be undone!`,
+        () => deletePlayer(name)
+    );
+}
+
+function deletePlayer(name){
+    delete players[name];
+    
+    // Remove player from rounds
+    rounds.forEach(round => {
+        round.A = round.A.filter(p => p !== name);
+        round.B = round.B.filter(p => p !== name);
+    });
+    
+    // Remove invalid rounds (those with less than required players)
+    const playersPerTeam = tournamentSettings.playersPerTeam;
+    rounds = rounds.filter(round => 
+        round.A.length >= playersPerTeam && round.B.length >= playersPerTeam
+    );
+    
+    // Reset round counters if needed
+    if(americanoRound >= rounds.length) americanoRound = 0;
+    if(tennisRound >= rounds.length) tennisRound = 0;
+    
+    saveData();
+    renderPlayersList();
+    showFeedback(`Player "${name}" deleted! 🗑️`);
+}
+
+function renderPlayersList(){
+    const container = document.getElementById("playersList");
+    const noPlayersMsg = document.getElementById("noPlayersMessage");
+    const playerNames = Object.keys(players);
+    
+    if(playerNames.length === 0){
+        container.innerHTML = "";
+        noPlayersMsg.style.display = "block";
+        return;
+    }
+    
+    noPlayersMsg.style.display = "none";
+    
+    let html = "";
+    playerNames.forEach((name, index) => {
+        const totalWins = players[name].americano.win + players[name].tennis.win;
+        const totalPoints = players[name].americano.point + players[name].tennis.point;
+        
+        html += `
+        <div class="player-card">
+            <div class="player-avatar">${name.charAt(0).toUpperCase()}</div>
+            <div class="player-name">${name}</div>
+            <div class="player-stats">
+                ${totalWins}W • ${totalPoints}pts
+            </div>
+            <div class="player-actions">
+                <button class="player-action-btn edit-btn" onclick="editPlayer('${name}')">✏️</button>
+                <button class="player-action-btn delete-btn" onclick="confirmDeletePlayer('${name}')">🗑️</button>
+            </div>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+// ===== TOURNAMENT SETTINGS =====
+
+function loadSettings(){
+    document.getElementById("playersPerTeam").value = tournamentSettings.playersPerTeam;
+    document.getElementById("numRounds").value = tournamentSettings.numRounds;
+}
+
+function generateRounds(){
+    const playersPerTeam = parseInt(document.getElementById("playersPerTeam").value);
+    const numRounds = parseInt(document.getElementById("numRounds").value);
+    const playerNames = Object.keys(players);
+    
+    if(playerNames.length < playersPerTeam * 2){
+        showFeedback(`Need at least ${playersPerTeam * 2} players! ⚠️`);
+        return;
+    }
+    
+    // Update settings
+    tournamentSettings = {playersPerTeam, numRounds};
+    
+    // Generate balanced rounds using round-robin algorithm
+    rounds = [];
+    const shuffledPlayers = [...playerNames].sort(() => Math.random() - 0.5);
+    
+    for(let roundNum = 0; roundNum < numRounds; roundNum++){
+        // Shuffle players for each round to ensure variety
+        const roundPlayers = [...shuffledPlayers].sort(() => Math.random() - 0.5);
+        
+        // Create matches
+        const matches = [];
+        for(let i = 0; i < roundPlayers.length; i += playersPerTeam * 2){
+            if(i + playersPerTeam * 2 <= roundPlayers.length){
+                const teamA = roundPlayers.slice(i, i + playersPerTeam);
+                const teamB = roundPlayers.slice(i + playersPerTeam, i + playersPerTeam * 2);
+                matches.push({A: teamA, B: teamB});
+            }
+        }
+        
+        // Add first match to rounds (can be extended for multiple matches per round)
+        if(matches.length > 0){
+            rounds.push(matches[0]);
+        }
+    }
+    
+    // Reset round counters
+    americanoRound = 0;
+    tennisRound = 0;
+    
+    // Reset match states
+    americanoState = {scoreA: 0, scoreB: 0};
+    tennisState = {tennisA: 0, tennisB: 0, gamesA: 0, gamesB: 0};
+    
+    saveData();
+    
+    // Show preview
+    showRoundsPreview();
+    
+    showFeedback(`Generated ${rounds.length} rounds! ✅`);
+    
+    // Haptic feedback
+    if(navigator.vibrate){
+        navigator.vibrate([50, 30, 50]);
+    }
+}
+
+function showRoundsPreview(){
+    const preview = document.getElementById("roundsPreview");
+    const content = document.getElementById("roundsPreviewContent");
+    
+    if(rounds.length === 0){
+        preview.style.display = "none";
+        return;
+    }
+    
+    let html = "";
+    rounds.forEach((round, index) => {
+        html += `
+        <div class="round-item">
+            <strong>Round ${index + 1}</strong>
+            <div class="round-match">
+                <span>${round.A.join(" & ")}</span>
+                <span>vs</span>
+                <span>${round.B.join(" & ")}</span>
+            </div>
+        </div>`;
+    });
+    
+    content.innerHTML = html;
+    preview.style.display = "block";
+}
+
 // ===== MATCH =====
 
 function loadRound(){
+    if(rounds.length === 0){
+        document.getElementById("teamAName").innerText = "No players - Add players first!";
+        document.getElementById("teamBName").innerText = "";
+        document.getElementById("roundLabel").innerText = "No rounds available";
+        return;
+    }
+    
     let r = rounds[currentRound];
     document.getElementById("teamAName").innerText = r.A.join(" & ");
     document.getElementById("teamBName").innerText = r.B.join(" & ");
-    document.getElementById("roundLabel").innerText = "Round " + (currentRound+1) + " (" + (mode==="americano"?"Americano":"Tennis") + ")";
+    document.getElementById("roundLabel").innerText = "Round " + (currentRound+1) + " of " + rounds.length + " (" + (mode==="americano"?"Americano":"Tennis") + ")";
 }
 
 function setMode(m){
@@ -1399,6 +1997,11 @@ function updateScoreUI(){
 }
 
 function addPoint(team){
+    if(rounds.length === 0){
+        showFeedback("Add players and generate rounds first! ⚠️");
+        return;
+    }
+
     // Add to history before making changes
     addToHistory("addPoint");
 
@@ -1476,6 +2079,11 @@ function addPoint(team){
 }
 
 function minusPoint(team){
+    if(rounds.length === 0){
+        showFeedback("Add players and generate rounds first! ⚠️");
+        return;
+    }
+
     // Add to history before making changes
     addToHistory("minusPoint");
 
@@ -1493,6 +2101,10 @@ function minusPoint(team){
 }
 
 function finishMatch(){
+    if(rounds.length === 0){
+        showFeedback("No rounds available! ⚠️");
+        return;
+    }
 
     let finalA = mode==="americano" ? scoreA : gamesA;
     let finalB = mode==="americano" ? scoreB : gamesB;
@@ -1515,36 +2127,44 @@ function finishMatch(){
     if(mode==="americano"){
         // Americano: total points scored
         r.A.forEach(p=>{
-            players[p].americano.point += finalA;
-            players[p].americano.conceded += finalB;
+            if(players[p]){
+                players[p].americano.point += finalA;
+                players[p].americano.conceded += finalB;
+            }
         });
 
         r.B.forEach(p=>{
-            players[p].americano.point += finalB;
-            players[p].americano.conceded += finalA;
+            if(players[p]){
+                players[p].americano.point += finalB;
+                players[p].americano.conceded += finalA;
+            }
         });
 
         if(finalA > finalB){
-            r.A.forEach(p=>players[p].americano.win++);
+            r.A.forEach(p=>{if(players[p]) players[p].americano.win++;});
         } else if(finalB > finalA){
-            r.B.forEach(p=>players[p].americano.win++);
+            r.B.forEach(p=>{if(players[p]) players[p].americano.win++;});
         }
     } else {
         // Tennis: track games won (e.g., 2-1 = 2 games for winner, 1 game for loser)
         r.A.forEach(p=>{
-            players[p].tennis.point += gamesA;
-            players[p].tennis.conceded += gamesB;
+            if(players[p]){
+                players[p].tennis.point += gamesA;
+                players[p].tennis.conceded += gamesB;
+            }
         });
 
         r.B.forEach(p=>{
-            players[p].tennis.point += gamesB;
-            players[p].tennis.conceded += gamesA;
+            if(players[p]){
+                players[p].tennis.point += gamesB;
+                players[p].tennis.conceded += gamesA;
+            }
         });
 
         if(gamesA > gamesB){
-            r.A.forEach(p=>players[p].tennis.win++);
+            r.A.forEach(p=>{if(players[p]) players[p].tennis.win++;});
         } else if(gamesB > gamesA){
-            r.B.forEach(p=>players[p].tennis.win++);
+            r.B.forEach(p=>{if(players[p]) players[p].tennis.win++;});
         }
     }
 
@@ -1722,6 +2342,8 @@ function resetTournament(){
     localStorage.removeItem("padelAmericanoState");
     localStorage.removeItem("padelTennisState");
     localStorage.removeItem("padelCurrentMode");
+    localStorage.removeItem("padelRounds");
+    localStorage.removeItem("padelTournamentSettings");
     location.reload();
 }
 
