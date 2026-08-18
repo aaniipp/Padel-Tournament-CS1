@@ -1,0 +1,680 @@
+/* ============================================================
+   PADEL TOURNAMENT PLATFORM — style.css
+   Theme: Court Dark / Elite Minimal
+   ============================================================
+   TABLE OF CONTENTS:
+   1. DESIGN TOKENS & VARIABLES
+   2. RESET & GLOBAL BASE
+   3. APP CONTAINER & PAGE SHELL
+   4. NAVIGATION BAR (BOTTOM NAV)
+   5. CARDS & SECTION CONTAINERS
+   6. BUTTONS & ACTIONS
+   7. FORM CONTROLS & DROPDOWNS
+   8. BADGES & LABELS
+   9. DATA TABLES (STANDINGS)
+   10. PLAYER LIST & AVATARS
+   11. SCOREBOARD & SCORING CONTROLS
+   12. COURT CARDS & MATCH CARDS
+   13. MODALS, TOASTS & WIZARDS
+   14. ANIMATIONS & EFFECTS
+   ============================================================ */
+
+/* ─── 1. DESIGN TOKENS & VARIABLES ───────────────────────── */
+:root {
+    /* Background Colors */
+    --bg-primary:       #0f172a;
+    --bg-secondary:     #1e293b;
+    --bg-glass:         rgba(255, 255, 255, 0.07);
+    --bg-glass-hover:   rgba(255, 255, 255, 0.11);
+    --bg-glass-border:  rgba(255, 255, 255, 0.1);
+
+    /* Accent & Status Colors */
+    --accent:           #ccff00;
+    --accent-dark:      #aadd00;
+    --accent-glow:      rgba(204, 255, 0, 0.35);
+    --success:          #00e676;
+    --success-glow:     rgba(0, 230, 118, 0.35);
+    --danger:           #ff5252;
+    --danger-glow:      rgba(255, 82, 82, 0.35);
+    --warning:          #ff9800;
+    --gold:             #ffd700;
+
+    /* Text Colors */
+    --text-primary:     #ededed;
+    --text-secondary:   rgba(255, 255, 255, 0.65);
+    --text-muted:       rgba(255, 255, 255, 0.42);
+    --text-on-accent:   #000000;
+
+    /* Typography */
+    --font:             -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", sans-serif;
+
+    /* Border Radii */
+    --radius-sm:        8px;
+    --radius-md:        12px;
+    --radius-lg:        16px;
+    --radius-xl:        20px;
+    --radius-pill:      50px;
+
+    /* Layout & Sizing */
+    --nav-height:       68px;
+    --safe-bottom:      env(safe-area-inset-bottom, 0px);
+
+    /* Z-Indices */
+    --z-nav:            100;
+    --z-overlay:        500;
+    --z-toast:          2000;
+}
+
+[data-theme="light"] {
+    --bg-primary:       #f0f2f5;
+    --bg-secondary:     #ffffff;
+    --bg-glass:         rgba(0, 0, 0, 0.05);
+    --bg-glass-hover:   rgba(0, 0, 0, 0.08);
+    --bg-glass-border:  rgba(0, 0, 0, 0.1);
+    --text-primary:     #1a1a2e;
+    --text-secondary:   rgba(0, 0, 0, 0.6);
+    --text-muted:       rgba(0, 0, 0, 0.38);
+}
+
+/* ─── 2. RESET & GLOBAL BASE ─────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: var(--font);
+    background: linear-gradient(160deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    min-height: 100svh;
+    overflow-x: hidden;
+    padding-top: env(safe-area-inset-top);
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 { font-size: 20px; }
+h2 { font-size: 18px; }
+h3 { font-size: 16px; }
+
+input, select, textarea, button {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+input::placeholder {
+    color: var(--text-muted);
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+}
+
+:focus-visible {
+    outline: 2px solid var(--success);
+    outline-offset: 2px;
+}
+
+/* ─── 3. APP CONTAINER & PAGE SHELL ──────────────────────── */
+.app {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100svh;
+    position: relative;
+}
+
+.page {
+    display: none;
+    padding: 20px 16px;
+    padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 32px);
+    min-height: 100svh;
+}
+
+.page.active {
+    display: block;
+    animation: fadeIn 0.18s ease;
+}
+
+.page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    min-height: 44px;
+}
+
+/* ─── 4. NAVIGATION BAR (BOTTOM NAV) ─────────────────────── */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    height: var(--nav-height);
+    background: rgba(10, 18, 36, 0.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-top: 1px solid var(--bg-glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: var(--z-nav);
+    padding-bottom: var(--safe-bottom);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--text-muted);
+    touch-action: manipulation;
+    user-select: none;
+    min-width: 60px;
+    transition: color 0.15s ease, transform 0.12s ease;
+}
+
+.nav-item:active { transform: scale(0.88); }
+.nav-item.active { color: var(--accent); }
+
+.nav-icon   { font-size: 22px; line-height: 1; }
+.nav-label  { font-size: 10px; font-weight: 600; letter-spacing: 0.4px; }
+
+/* ─── 5. CARDS & SECTION CONTAINERS ──────────────────────── */
+.card {
+    background: var(--bg-glass);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-xl);
+    padding: 16px;
+    transition: background 0.2s ease;
+}
+
+.section-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+}
+
+.divider {
+    height: 1px;
+    background: var(--bg-glass-border);
+    margin: 20px 0;
+}
+
+/* ─── 6. BUTTONS & ACTIONS ───────────────────────────────── */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 20px;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation;
+    user-select: none;
+    white-space: nowrap;
+    border: 1.5px solid transparent;
+}
+
+.btn:active { transform: scale(0.96); }
+
+.btn-primary {
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border-color: var(--accent);
+}
+.btn-primary:hover { background: var(--accent-dark); }
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border-color: var(--bg-glass-border);
+}
+.btn-outline:hover { background: var(--bg-glass-hover); }
+
+.btn-success {
+    background: rgba(0, 230, 118, 0.15);
+    color: var(--success);
+    border-color: rgba(0, 230, 118, 0.35);
+}
+.btn-danger {
+    background: rgba(255, 82, 82, 0.15);
+    color: var(--danger);
+    border-color: rgba(255, 82, 82, 0.35);
+}
+.btn-warning {
+    background: rgba(255, 152, 0, 0.15);
+    color: var(--warning);
+    border-color: rgba(255, 152, 0, 0.35);
+}
+.btn-ghost {
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-muted);
+    padding: 8px;
+}
+.btn-ghost:hover { color: var(--text-primary); }
+
+.btn-sm    { padding: 8px 14px; font-size: 13px; border-radius: var(--radius-md); }
+.btn-lg    { padding: 16px 28px; font-size: 17px; border-radius: var(--radius-xl); }
+.btn-block { width: 100%; }
+.btn-icon  { padding: 8px; border-radius: var(--radius-md); }
+
+/* ─── 7. FORM CONTROLS & DROPDOWNS ───────────────────────── */
+.form-group  { display: flex; flex-direction: column; gap: 6px; }
+.form-label  { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+
+.input, .select {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg-glass);
+    border: 1.5px solid var(--bg-glass-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 15px;
+    transition: border-color 0.15s ease;
+    appearance: none;
+    -webkit-appearance: none;
+}
+.input:focus, .select:focus {
+    border-color: var(--accent);
+}
+.select option {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+/* ─── 8. BADGES & LABELS ─────────────────────────────────── */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: var(--radius-pill);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border: 1px solid transparent;
+}
+.badge-success { background: rgba(0, 230, 118, 0.15); color: var(--success); border-color: rgba(0, 230, 118, 0.3); }
+.badge-warning { background: rgba(255, 152, 0, 0.15); color: var(--warning); border-color: rgba(255, 152, 0, 0.3); }
+.badge-danger  { background: rgba(255, 82, 82, 0.15); color: var(--danger);  border-color: rgba(255, 82, 82, 0.3); }
+.badge-gold    { background: rgba(255, 215, 0, 0.15); color: var(--gold);    border-color: rgba(255, 215, 0, 0.3); }
+.badge-muted   { background: var(--bg-glass);        color: var(--text-muted); border-color: var(--bg-glass-border); }
+.badge-accent  { background: rgba(204, 255, 0, 0.15); color: var(--accent);  border-color: rgba(204, 255, 0, 0.3); }
+
+/* ─── 9. DATA TABLES (STANDINGS) ─────────────────────────── */
+.table-container {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+}
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.table th {
+    padding: 10px 12px;
+    background: var(--bg-glass);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    white-space: nowrap;
+}
+.table td {
+    padding: 12px;
+    border-bottom: 1px solid var(--bg-glass-border);
+    text-align: center;
+    font-size: 14px;
+}
+.table tr:last-child td { border-bottom: none; }
+.table tbody tr:hover td { background: var(--bg-glass); }
+
+/* ─── 10. PLAYER LIST & AVATARS ──────────────────────────── */
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--bg-glass-border);
+}
+.player-item:last-child { border-bottom: none; }
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.player-item-name    { font-weight: 600; font-size: 15px; }
+.player-item-info    { flex: 1; }
+.player-item-actions { display: flex; gap: 4px; }
+
+/* ─── 11. SCOREBOARD & SCORING CONTROLS ──────────────────── */
+.scoreboard {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.team-panel {
+    flex: 1;
+    background: var(--bg-glass);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-xl);
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.25s ease;
+}
+.team-panel.winner {
+    background: rgba(204, 255, 0, 0.08);
+    border-color: var(--accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+}
+
+.team-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.score-sets   { font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1; }
+.score-games  { font-size: 22px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+.score-points { font-size: 26px; font-weight: 800; color: var(--text-secondary); line-height: 1; }
+
+.scoreboard-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding-top: 38px;
+}
+.score-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    width: 40px;
+    text-align: center;
+}
+
+.score-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.btn-score-add {
+    width: 100%;
+    padding: 16px 0;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 20px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    touch-action: manipulation;
+}
+.btn-score-add:active {
+    transform: scale(0.94);
+    background: var(--accent-dark);
+}
+
+.btn-score-sub {
+    width: 100%;
+    padding: 10px 0;
+    background: rgba(255, 82, 82, 0.13);
+    color: var(--danger);
+    border: 1px solid rgba(255, 82, 82, 0.25);
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    touch-action: manipulation;
+}
+.btn-score-sub:active { transform: scale(0.95); }
+
+.set-history {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    min-height: 26px;
+}
+.set-badge {
+    background: var(--bg-glass);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-sm);
+    padding: 3px 9px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.winner-banner {
+    text-align: center;
+    padding: 16px;
+    background: rgba(204, 255, 0, 0.1);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    font-weight: 800;
+}
+
+.match-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+}
+.match-actions .btn { flex: 1; }
+
+/* ─── 12. COURT CARDS & MATCH CARDS ──────────────────────── */
+.court-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+}
+.court-card {
+    border-radius: var(--radius-lg);
+    padding: 14px;
+    text-align: center;
+    border: 1px solid;
+}
+.court-card.available   { background: rgba(0, 230, 118, 0.08); border-color: rgba(0, 230, 118, 0.3); }
+.court-card.in_use      { background: rgba(204, 255, 0, 0.08); border-color: rgba(204, 255, 0, 0.3); }
+.court-card.maintenance { background: rgba(255, 82, 82, 0.08); border-color: rgba(255, 82, 82, 0.3); }
+
+.court-card-icon   { font-size: 22px; margin-bottom: 4px; }
+.court-card-name   { font-size: 13px; font-weight: 700; }
+.court-card-status { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; color: var(--text-muted); }
+
+.match-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-lg);
+    padding: 12px;
+    margin-bottom: 8px;
+    transition: background 0.15s;
+}
+.match-card-meta    { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.match-card-teams   { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.match-card-team    { flex: 1; font-size: 13px; font-weight: 600; }
+.match-card-team.right { text-align: right; }
+.match-card-score   { padding: 4px 10px; font-size: 15px; font-weight: 800; color: var(--accent); }
+.match-card-actions { display: flex; gap: 6px; margin-top: 8px; }
+.match-card-actions .btn { flex: 1; }
+
+/* ─── 13. MODALS, TOASTS & WIZARDS ───────────────────────── */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(6px);
+    z-index: var(--z-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+.modal-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal {
+    background: #1a2540;
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-xl);
+    padding: 24px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: translateY(8px);
+    transition: transform 0.2s ease;
+}
+.modal-overlay.visible .modal { transform: translateY(0); }
+
+.modal-title   { font-size: 18px; margin-bottom: 8px; }
+.modal-message { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions .btn { flex: 1; }
+
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-80px);
+    background: #1e293b;
+    color: var(--text-primary);
+    border: 1px solid var(--bg-glass-border);
+    border-radius: var(--radius-pill);
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: var(--z-toast);
+    white-space: nowrap;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+.empty-state {
+    text-align: center;
+    padding: 48px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.empty-state-icon  { font-size: 48px; }
+.empty-state-title { font-size: 18px; font-weight: 700; }
+.empty-state-text  { font-size: 14px; color: var(--text-muted); max-width: 240px; text-align: center; }
+
+/* ─── 14. UTILITIES & ANIMATIONS ─────────────────────────── */
+.flex         { display: flex; }
+.flex-col     { flex-direction: column; }
+.flex-center  { align-items: center; justify-content: center; }
+.flex-between { justify-content: space-between; }
+.flex-1       { flex: 1; }
+.flex-wrap    { flex-wrap: wrap; }
+.gap-xs  { gap: 4px; }
+.gap-sm  { gap: 8px; }
+.gap-md  { gap: 12px; }
+.gap-lg  { gap: 16px; }
+.gap-xl  { gap: 20px; }
+
+.text-muted   { color: var(--text-muted); }
+.text-success { color: var(--success); }
+.text-danger  { color: var(--danger); }
+.text-warning { color: var(--warning); }
+.text-accent  { color: var(--accent); }
+.text-center  { text-align: center; }
+.font-bold    { font-weight: 700; }
+.font-black   { font-weight: 800; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.65; }
+}
+
+@keyframes confettiFall {
+    0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(540deg); opacity: 0; }
+}
+
+.confetti-particle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    top: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 2px;
+    animation: confettiFall linear forwards;
+}
